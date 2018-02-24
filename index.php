@@ -4,6 +4,8 @@
 
     //Require the autoload file
     require_once('vendor/autoload.php');
+    require_once '/home/mdenggre/db-config.php';
+    require_once 'model/db-functions.php';
 
     //Create an instance of the Base class
     $f3 = Base::instance();
@@ -11,16 +13,23 @@
     //Set devug level
     $f3->set('DEBUG', 3); //3 is higher than 0, will present more info
 
+    //Connect to database
+    $dbh = connect();
+
     //Define a default route
     $f3->route('GET /', function($f3) {
         echo "<p>This page show the project list, click the <a href='project/123'>project</a> will go to project summary page.</p>
               <p>This page also has <a href='signIn'>signIn</a> button. 
                  If user already sign in, an <a href='addProject'>Add Project</a> button will show up.<br>
                  If a supper administrator sign in, an <a href='admin'>admin</a> button will show up.</p>";
+
+        $projects = getProjects();
+        $f3->set("projects", $projects);
+
         echo Template::instance() -> render('views/pList.html');
     });
 
-    $f3->route('GET /project/@pid', function($f3) {
+    $f3->route('GET /project/@pid', function($f3, $params) {
         echo "<p>This is the summary page for a project, and also for the info modification.</p>
               <p>The project info is divided by zone like client info, class info and so on. <br>
                  The input fields are disable(can't be modify) by default.<br>
@@ -30,6 +39,10 @@
                  then user can modify and submit the final change using Ajax, <br>
                  after that the info has been refresh and the fields return to disable.
                  </p>";
+
+        $project = getProject($params['pid']);
+        $f3->set("project", $project);
+
         echo Template::instance() -> render('views/pSummary.html');
     });
 
