@@ -1,0 +1,59 @@
+body{
+    background-color: white;
+}
+
+#brand-head, thin {
+    color: white;
+}
+
+.new-form {
+    background-color: #EAECEE;
+    margin: 5%;
+    margin-top: 2%;
+    padding: 18px;
+    border-radius: 5px;
+}
+
+label{
+    font-weight: 100;
+}
+
+legend{
+    font-weight: 300;
+    font-size: 16px;
+}
+
+input::placeholder{
+    font-weight: 100;
+}
+
+#cancel{
+    width: 25px;
+}
+
+#cancel:hover{
+    cursor: pointer;
+}
+
+button {
+    letter-spacing: 2px;
+}
+
+button:hover, #cancel:hover{
+    opacity: 0.6;
+    transition: all 0.5s;
+}
+
+input, textarea{
+    width: 100%;
+    padding: 6px;
+    padding-left: 12px;
+    border-radius: 10px;
+    border: 1px solid lightgray;
+}
+
+input:focus, textarea:focus{
+    outline: none;
+    border: 1px solid #4A235A;
+    transition: border 1s;
+}
