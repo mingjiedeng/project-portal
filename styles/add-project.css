@@ -65,3 +65,10 @@ input:focus, textarea:focus{
 .modal-title{
     font-weight: 200;
 }
+
+.link:hover{
+    color: tomato;
+    text-decoration: none;
+    outline: none;
+    transition: all 0.5s ease;
+}

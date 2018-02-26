@@ -124,8 +124,8 @@
                     <div class="col-md-6">
                         <textarea name="description" style="font-weight: 100;" rows="2">Description:</textarea>
                     </div>
-                    <div class="col-md-2 text-md-right"><a id="add-url" href="" data-toggle="modal" data-target="#myModal">Add Url</a></div>
-                    <div class="col-md-4 text-md-right"><a id="add-cred" href="" data-toggle="modal" data-target="#myModal">Add Login Credentials</a></div>
+                    <div class="col-md-2 text-md-right"><a class="link" id="add-url" href="" data-toggle="modal" data-target="#myModal">Add Url</a></div>
+                    <div class="col-md-4 text-md-right"><a class="link" id="add-cred" href="" data-toggle="modal" data-target="#myModal">Add Login Credentials</a></div>
                 </div>
             </fieldset> <!--project info end-->
 
@@ -142,6 +142,13 @@
                     <div class="col-md-4">
                         <input type="text" name="year" placeholder="Year:">
                     </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div id="note"><textarea name="note" style="font-weight: 100;" rows="2">Note:</textarea></div>
+                    </div>
+                    <div class="col-md-6 text-md-right"><button type="button" class="btn btn-sm btn-outline-success rounded-0" id="add-note">Add Note</button></div>
                 </div>
             </fieldset> <!--class info end-->
 
@@ -190,7 +197,7 @@
 
                 <div class="row">
                     <div class="col-md-2">
-                        <a href="" id="add-conct" data-toggle="modal" data-target="#myModal">Add contact</a>
+                        <a href="" class="link" id="add-conct" data-toggle="modal" data-target="#myModal">Add contact</a>
                     </div>
                 </div>
             </fieldset> <!--contact info end-->
@@ -215,6 +222,7 @@
         $(".new-form").hide();
         $(".new-form").show(300);
         $("input,textarea").hide();
+        $("#note").hide();
 
         //fade in content
         $("input,textarea").each(function (index) {
@@ -241,6 +249,24 @@
             $("#add-contact").show();
             $("#url").hide();
             $("#add-login").hide();
+        });
+
+        //display and hide note text area on click
+        $("#add-note").click(function(){
+            var vis = $("#note").is(":visible");
+            if(vis)
+            {
+                $("#add-note").html("Add Note");
+                $("#add-note").removeClass("btn-outline-danger");
+                $("#add-note").addClass("btn-outline-success");
+                $("#note").hide(300);
+            }
+            else {
+                $("#add-note").html("Remove");
+                $("#add-note").removeClass("btn-outline-success");
+                $("#add-note").addClass("btn-outline-danger");
+                $("#note").show(300);
+            }
         });
     });
 </script>
