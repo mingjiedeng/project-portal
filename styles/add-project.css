@@ -27,11 +27,11 @@ input::placeholder{
     font-weight: 100;
 }
 
-#cancel{
+.cancel{
     width: 25px;
 }
 
-#cancel:hover{
+.cancel:hover{
     cursor: pointer;
 }
 
@@ -56,4 +56,12 @@ input:focus, textarea:focus{
     outline: none;
     border: 1px solid #4A235A;
     transition: border 1s;
+}
+
+#exampleModalLabel{
+    color: white;
+}
+
+.modal-title{
+    font-weight: 200;
 }

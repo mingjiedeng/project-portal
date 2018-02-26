@@ -23,8 +23,8 @@
 //                 If user already sign in, an <a href='addProject'>Add Project</a> button will show up.<br>
 //                 If a supper administrator sign in, an <a href='admin'>admin</a> button will show up.</p>";
 
-        $projects = getProjects();
-        $f3->set("projects", $projects);
+//        $projects = getProjects();
+//        $f3->set("projects", $projects);
         echo Template::instance() -> render('views/pList.html');
     });
 

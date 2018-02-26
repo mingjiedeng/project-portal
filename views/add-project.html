@@ -27,6 +27,69 @@
     </div>
 </nav><!-- nav bar -->
 
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div style="background-color: #EAECEE;" class="modal-content rounded-0">
+            <div style="background-color: #1C2833;" class="modal-header rounded-0">
+                <h5 class="modal-title" id="exampleModalLabel">Add Url</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <img class="float-right cancel" name="cancel" src="./images/error.svg" alt="cancel">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="url" class="row">
+                    <div class="col-md-4">
+                        <select style="font-weight: 100;" name="status" class="form-control-sm">
+                            <option value="none">--Url Type--</option>
+                            <option value="Project Url">Project Url</option>
+                            <option value="Torrelo">Torrelo</option>
+                            <option value="Github">Github</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-8">
+                        <input type="text" name="url" class="form-control-sm" placeholder="Url:">
+                    </div>
+                </div>
+
+                <div id="add-login" class="row">
+                    <div class="col-md-6">
+                        <input type="text" name="username" class="form-control-sm" placeholder="Username:">
+                    </div>
+
+                    <div class="col-md-6">
+                        <input type="text" name="password" class="form-control-sm" placeholder="Password:">
+                    </div>
+                </div>
+
+                <div id="add-contact">
+                    <div class="row form-group">
+                        <div class="col-md-6">
+                            <input type="text" name="add-client-name" class="form-control-sm" placeholder="Name:">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="add-client-title" class="form-control-sm" placeholder="Title:">
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-6">
+                            <input type="text" name="add-client-phone" class="form-control-sm" placeholder="Phone:">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="add-client-email" class="form-control-sm" placeholder="Email:">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-success rounded-0">Add</button>
+            </div>
+        </div>
+    </div>
+</div> <!--Modal end-->
+
 <div class="container">
     <div class="new-form">
         <form action="#" method="post">
@@ -36,7 +99,7 @@
                         <legend>Project Information</legend>
                     </div>
                     <div class="col-6">
-                        <img class="float-right" id="cancel" name="cancel" src="./images/error.svg" alt="cancel">
+                        <img class="float-right cancel" name="cancel" src="./images/error.svg" alt="cancel">
                     </div>
                 </div>
                 <hr style="margin-top: 2px;">
@@ -61,10 +124,10 @@
                     <div class="col-md-6">
                         <textarea name="description" style="font-weight: 100;" rows="2">Description:</textarea>
                     </div>
-                    <div class="col-md-2 text-md-right"><a href="">Add Url</a></div>
-                    <div class="col-md-4 text-md-right"><a href="">Add Login Credentials</a></div>
+                    <div class="col-md-2 text-md-right"><a id="add-url" href="" data-toggle="modal" data-target="#myModal">Add Url</a></div>
+                    <div class="col-md-4 text-md-right"><a id="add-cred" href="" data-toggle="modal" data-target="#myModal">Add Login Credentials</a></div>
                 </div>
-            </fieldset>
+            </fieldset> <!--project info end-->
 
             <fieldset>
                 <legend>Class Information</legend>
@@ -80,7 +143,7 @@
                         <input type="text" name="year" placeholder="Year:">
                     </div>
                 </div>
-            </fieldset>
+            </fieldset> <!--class info end-->
 
             <fieldset>
                 <legend>Company Information</legend>
@@ -100,7 +163,7 @@
                         <input type="text" name="site-url" placeholder="Site url:">
                     </div>
                 </div>
-            </fieldset>
+            </fieldset> <!--company info end-->
 
             <fieldset>
                 <legend>Contact Information</legend>
@@ -127,31 +190,10 @@
 
                 <div class="row">
                     <div class="col-md-2">
-                        <a href="">Add contact</a>
+                        <a href="" id="add-conct" data-toggle="modal" data-target="#myModal">Add contact</a>
                     </div>
                 </div>
-            </fieldset>
-
-            <!--<fieldset>-->
-                <!--<legend>Class Information</legend>-->
-                <!--<hr style="margin-top: 2px;">-->
-                <!--<div class="form-group row">-->
-                    <!--<div class="col-md-4">-->
-                        <!--<input type="text" name="classname" placeholder="Class name:">-->
-                    <!--</div>-->
-                    <!--<div class="col-md-4">-->
-                        <!--<input type="text" name="quarter" placeholder="Quarter:">-->
-                    <!--</div>-->
-                    <!--<div class="col-md-4">-->
-                        <!--<input type="text" name="year" placeholder="Year:">-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</fieldset>-->
-
-            <!--<div style="margin-top: 10px;" class="form-group row">-->
-                <!--<div class="col-md-2"><a href="">Add Url</a></div>-->
-                <!--<div class="col-md-3"><a href="">Add Login Credentials</a></div>-->
-            <!--</div>-->
+            </fieldset> <!--contact info end-->
 
             <div class="form-group row">
                 <div class="col-md-2 offset-md-10">
@@ -177,6 +219,28 @@
         //fade in content
         $("input,textarea").each(function (index) {
             $(this).delay(30*index).fadeIn(800);
+        });
+
+        //change modal fields on click
+        $("#add-url").click(function(){
+            $("#exampleModalLabel").html("Add Url");
+            $("#url").show();
+            $("#add-login").hide();
+            $("#add-contact").hide();
+        });
+
+        $("#add-cred").click(function(){
+            $("#exampleModalLabel").html("Add Credentials");
+            $("#add-login").show();
+            $("#url").hide();
+            $("#add-contact").hide();
+        });
+
+        $("#add-conct").click(function(){
+            $("#exampleModalLabel").html("Add Contact");
+            $("#add-contact").show();
+            $("#url").hide();
+            $("#add-login").hide();
         });
     });
 </script>
