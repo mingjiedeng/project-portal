@@ -1,0 +1,78 @@
+body{
+    background-color: #85929E;
+}
+#login-box{
+    background-color: #EAECEE;
+    width: 40%;
+    margin: auto;
+    margin-top: 5%;
+    padding: 30px;
+    border-radius: 5px;
+}
+#login-head{
+    margin-top: 5%;
+    text-align: center;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+#login-img{
+    display: block;
+    width: 50px;
+    margin: auto;
+    margin-top: 3em;
+    margin-bottom: 4em;
+}
+
+#cancel{
+    width: 30px;
+}
+
+#cancel:hover{
+    width: 34px;
+    transition: all 0.5s;
+}
+
+#sign-in{
+    width: 100%;
+    border: 0;
+    border-radius: 25px;
+    margin-top: 30px;
+    background: linear-gradient(to top left, #FB00FF,#00FFF0);
+    font-size: 18px;
+    letter-spacing: 3px;
+    font-weight: 200;
+}
+
+#sign-in:hover{
+    outline: none;
+    margin-left: 10%;
+    margin-right: 10%;
+    width: 80%;
+    transition: all 0.5s;
+}
+
+input{
+    border: 0;
+    border: 1px solid lightgray;
+    outline: none;
+    width: 100%;
+    padding: 10px;
+    padding-left: 15px;
+    border-radius: 10px;
+}
+
+input::placeholder{
+    font-weight: 200;
+}
+
+input:focus{
+    border: 1px solid blue;
+    transition: all 1s;
+}
+
+a{
+    text-decoration: none;
+    text-outline: none;
+    font-weight: 300;
+}

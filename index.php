@@ -18,6 +18,7 @@
 
     //Define a default route
     $f3->route('GET /', function($f3) {
+        $f3->set('login', 'yes');
 //        echo "<p>This page show the project list, click the <a href='project/123'>project</a> will go to project summary page.</p>
 //              <p>This page also has <a href='signIn'>signIn</a> button.
 //                 If user already sign in, an <a href='addProject'>Add Project</a> button will show up.<br>
@@ -51,8 +52,7 @@
     });
 
     $f3->route('GET /signIn', function($f3) {
-        echo "<h1>Sign In Page</h1>";
-        echo "<p>User will be redirected to the previous page after successfully sign in.</p>";
+
         echo Template::instance() -> render('views/signIn.html');
     });
 

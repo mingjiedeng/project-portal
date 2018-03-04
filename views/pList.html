@@ -9,7 +9,9 @@
     <title>Project Portal</title>
 
     <style>
-
+        body{
+            /*background: linear-gradient(to top left, #FF00A6,#6100FF);*/
+        }
     </style>
 </head>
 
@@ -25,7 +27,12 @@
 
     <div class="" id="myContent">
         <div class="navbar-nav ml-auto">
-            <a class="nav-item nav-link active thin" href="./addProject"><img id="add-icon" src="./images/add.svg"> <span>Add new project</span></a>
+            <check if="{{isset(@login)}}">
+                <a class="nav-item nav-link active thin" href="./addProject"><img id="add-icon" src="./images/add.svg"> <span>Add new project</span></a>
+            </check>
+            <check if="{{!isset(@login)}}">
+                <a class="nav-item nav-link active thin" href="./signIn"><span>Sign In</span></a>
+            </check>
         </div>
     </div>
 </nav><!-- nav bar -->
@@ -35,6 +42,7 @@
         <div class="row">
             <div class="col">
                 <p class="h3">iGrad</p>
+                <hr>
                 <p>
                     Text messaging, or texting, is the act of composing and sending electronic messages, typically consisting of alphabetic and numeric characters, between two or more users of mobile phones, tablets, desktops/laptops, or other devices.
                 </p>
@@ -46,8 +54,9 @@
                         <a href="">Project Url</a>
                     </div>
 
-                    <div class="col-6">
-                        <a class="float-right" href="">View</a>
+                    <div class="col-6 text-right">
+                        <button class="btn btn-outline-primary rounded-0">View</button>
+                        <!--<a class="float-right" href="">View</a>-->
                     </div>
                 </div>
             </div>
@@ -58,6 +67,7 @@
         <div class="row">
             <div class="col">
                 <p class="h3">App</p>
+                <hr>
                 <p>
                     Text messaging, or texting, is the act of composing and sending electronic messages, typically consisting of alphabetic and numeric characters, between two or more users of mobile phones, tablets, desktops/laptops, or other devices.
                 </p>
@@ -69,8 +79,9 @@
                         <a href="">Project Url</a>
                     </div>
 
-                    <div class="col-6">
-                        <a class="float-right" href="">View</a>
+                    <div class="col-6 text-right">
+                        <button class="btn btn-outline-primary rounded-0">View</button>
+                        <!--<a class="float-right" href="">View</a>-->
                     </div>
                 </div>
             </div>
@@ -81,6 +92,7 @@
         <div class="row">
             <div class="col">
                 <p class="h3">Project Portal</p>
+                <hr>
                 <p>
                     Text messaging, or texting, is the act of composing and sending electronic messages, typically consisting of alphabetic and numeric characters, between two or more users of mobile phones, tablets, desktops/laptops, or other devices.
                 </p>
@@ -92,8 +104,9 @@
                         <a href="">Project Url</a>
                     </div>
 
-                    <div class="col-6">
-                        <a class="float-right" href="">View</a>
+                    <div class="col-6 text-right">
+                        <button class="btn btn-outline-primary rounded-0">View</button>
+                        <!--<a class="float-right" href="">View</a>-->
                     </div>
                 </div>
             </div>
@@ -104,6 +117,7 @@
         <div class="row">
             <div class="col">
                 <p class="h3">Trucking app</p>
+                <hr>
                 <p>
                     Text messaging, or texting, is the act of composing and sending electronic messages, typically consisting of alphabetic and numeric characters, between two or more users of mobile phones, tablets, desktops/laptops, or other devices.
                 </p>
@@ -115,8 +129,9 @@
                         <a href="">Project Url</a>
                     </div>
 
-                    <div class="col-6">
-                        <a class="float-right" href="">View</a>
+                    <div class="col-6 text-right">
+                        <button class="btn btn-outline-primary rounded-0">View</button>
+                        <!--<a class="float-right" href="">View</a>-->
                     </div>
                 </div>
             </div>
@@ -124,12 +139,6 @@
     </div>
 </div>
 
-<ol>
-    <repeat group="{{ @projects }}" value="{{ @project }}">
-        <li><a href="{{ @BASE }}/project/{{ @project['pid'] }}">
-            {{ @project['pTitle']}}</a></li>
-    </repeat>
-</ol>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -165,6 +174,16 @@
         //show search bar
         $("#search-icon").click(function(){
             $("#search").show(400);
+        });
+
+        //add and remove class from btn
+        $(".list").mouseover(function(){
+           $(this).find(".btn").removeClass("btn-outline-primary");
+            $(this).find(".btn").addClass("btn-primary");
+        });
+        $(".list").mouseout(function(){
+            $(this).find(".btn").removeClass("btn-primary");
+            $(this).find(".btn").addClass("btn-outline-primary");
         });
     });
 </script>

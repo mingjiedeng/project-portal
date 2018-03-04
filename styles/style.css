@@ -1,5 +1,6 @@
 body{
-    background-color: #4A235A;
+    background-color: #2C3E50;
+    /*background: linear-gradient(to top left, #FF00A6,#6100FF);*/
 }
 
 #brand-head{
@@ -60,10 +61,25 @@ body{
 }
 
 .list{
-    background-color: white;
+    background-color: #EAECEE;
     padding: 15px;
-    border-radius: 10px;
     margin: 5%;
     margin-top: 0;
     margin-bottom: 1%;
+}
+
+.list a{
+    color: tomato;
+    text-decoration: none;
+}
+
+.list:hover a{
+    color: #273746;
+    transition: all 0.5s;
+}
+.list:hover{
+    background-color: #EB984E;
+    color: white;
+    margin-left: 25px;
+    transition: all 0.5s;
 }

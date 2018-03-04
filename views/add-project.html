@@ -12,6 +12,9 @@
         .thin{
             color: white;
         }
+        body{
+            /*background: linear-gradient(to top left, #00FF17,#0032FF);*/
+        }
     </style>
 </head>
 <body>
@@ -84,7 +87,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-success rounded-0">Add</button>
+                <button type="button" name="add" class="btn btn-outline-success rounded-0">Add</button>
             </div>
         </div>
     </div>
@@ -124,8 +127,28 @@
                     <div class="col-md-6">
                         <textarea name="description" style="font-weight: 100;" rows="2">Description:</textarea>
                     </div>
-                    <div class="col-md-2 text-md-right"><a class="link" id="add-url" href="" data-toggle="modal" data-target="#myModal">Add Url</a></div>
-                    <div class="col-md-4 text-md-right"><a class="link" id="add-cred" href="" data-toggle="modal" data-target="#myModal">Add Login Credentials</a></div>
+                    <div class="col-md-6">
+                        <textarea name="note" style="font-weight: 100;" rows="2">Note:</textarea>
+                    </div>
+                    <!--<div class="col-md-2 text-md-right"><a class="link" id="add-url" href="" data-toggle="modal" data-target="#myModal">Add Url</a></div>-->
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        <input type="text" name="project-link" class="" placeholder="Project link:">
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="torelo-link" class="" placeholder="Torelo link:">
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="github-link" class="" placeholder="Github link:">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 text-md-right">
+                        <a class="link" id="add-cred" href="" data-toggle="modal" data-target="#myModal">Add Login Credentials</a>
+                    </div>
                 </div>
             </fieldset> <!--project info end-->
 
@@ -134,21 +157,22 @@
                 <hr style="margin-top: 2px;">
                 <div class="form-group row">
                     <div class="col-md-4">
-                        <input type="text" name="classname" placeholder="Class name:">
+                        <input type="text" name="classname[]" placeholder="Class name:">
                     </div>
                     <div class="col-md-4">
-                        <input type="text" name="quarter" placeholder="Quarter:">
+                        <input type="text" name="quarter[]" placeholder="Quarter:">
                     </div>
                     <div class="col-md-4">
-                        <input type="text" name="year" placeholder="Year:">
+                        <input type="text" name="year[]" placeholder="Year:">
                     </div>
                 </div>
 
+                <div id="class-info"></div>
                 <div class="row">
-                    <div class="col-md-6">
-                        <div id="note"><textarea name="note" style="font-weight: 100;" rows="2">Note:</textarea></div>
+                    <div class="col-md-6 offset-md-6 text-md-right">
+                        <button type="button" class="btn btn-sm btn-outline-success rounded-0" id="add-class">Add Class</button>
+                        <button type="button" class="btn btn-sm btn-outline-danger rounded-0" id="remove-class">Remove Class</button>
                     </div>
-                    <div class="col-md-6 text-md-right"><button type="button" class="btn btn-sm btn-outline-success rounded-0" id="add-note">Add Note</button></div>
                 </div>
             </fieldset> <!--class info end-->
 
@@ -204,7 +228,7 @@
 
             <div class="form-group row">
                 <div class="col-md-2 offset-md-10">
-                    <button style="font-weight: 300; font-size: 20px; color: white; width: 100%; background-color: #4A235A;" class="btn">Confirm</button>
+                    <button type="submit" style="font-weight: 300; font-size: 20px; color: white; width: 100%; background-color: #4A235A;" class="btn">Confirm</button>
                 </div>
             </div>
         </form>
@@ -251,22 +275,37 @@
             $("#add-login").hide();
         });
 
-        //display and hide note text area on click
-        $("#add-note").click(function(){
-            var vis = $("#note").is(":visible");
-            if(vis)
+        //add more classes field on button click
+        var class_id = 0;
+        $("#remove-class").hide();
+        $("#add-class").click(function() {
+            $("#remove-class").show(300);
+            if(class_id < 4)
             {
-                $("#add-note").html("Add Note");
-                $("#add-note").removeClass("btn-outline-danger");
-                $("#add-note").addClass("btn-outline-success");
-                $("#note").hide(300);
+                class_id++;
+                $("#class-info").append("<div id='" + class_id + "' class='form-group row'>\n" +
+                    "                    <div class='col-md-4'>\n" +
+                    "                        <input type='text' name='classname[]' placeholder='Class name:'>\n" +
+                    "                    </div>\n" +
+                    "                    <div class='col-md-4'>\n" +
+                    "                        <input type='text' name='quarter[]' placeholder='Quarter:'>\n" +
+                    "                    </div>\n" +
+                    "                    <div class='col-md-4'>\n" +
+                    "                        <input type='text' name='year[]' placeholder='Year:'>\n" +
+                    "                    </div>\n" +
+                    "                </div>");
+                $('#'+class_id).hide();
             }
-            else {
-                $("#add-note").html("Remove");
-                $("#add-note").removeClass("btn-outline-success");
-                $("#add-note").addClass("btn-outline-danger");
-                $("#note").show(300);
+            $("#"+class_id).show(300);
+        });
+
+        $("#remove-class").click(function(){
+            $('#'+class_id).remove();
+            if(class_id > 0) {
+               class_id--;
             }
+            if(class_id == 0)
+               $("#remove-class").fadeOut("slow");
         });
     });
 </script>
