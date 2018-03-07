@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `projects` (
 
 
 INSERT INTO `projects` (pTitle, description, cname) VALUES
-('iGrad Registration', 'Provide students a web application form for iGrad registration', 'iGrad'),
+('iGrad Registration', 'Provide a web application form of iGrad registration for students', 'iGrad'),
 ('Project A', 'This is a project sample', 'Company A'),
 ('Project B', 'This is an other project sample', 'Company B');
 
