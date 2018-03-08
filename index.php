@@ -4,8 +4,7 @@
 
     //Require the autoload file
     require_once('vendor/autoload.php');
-//    require_once '/home/mdenggre/db-config.php';
-//    require_once 'model/db-functions.php';
+    require_once '/home/mdenggre/db-config.php';
 
     //Create an instance of the Base class
     $f3 = Base::instance();
@@ -13,19 +12,18 @@
     //Set devug level
     $f3->set('DEBUG', 3); //3 is higher than 0, will present more info
 
-    //Connect to database
-//    $dbh = connect();
 
     //Define a default route
     $f3->route('GET /', function($f3) {
         $f3->set('login', 'yes');
-//        echo "<p>This page show the project list, click the <a href='project/123'>project</a> will go to project summary page.</p>
-//              <p>This page also has <a href='signIn'>signIn</a> button.
-//                 If user already sign in, an <a href='addProject'>Add Project</a> button will show up.<br>
-//                 If a supper administrator sign in, an <a href='admin'>admin</a> button will show up.</p>";
 
-//        $projects = getProjects();
-//        $f3->set("projects", $projects);
+//        $data = array('pTitle' => 'Project D',
+//                    'description' => 'test again',
+//                    'cName' => 'Company D');
+        $project = new Project();
+        $projects = $project->getProjects();
+        $f3->set('projects', $projects);
+
         echo Template::instance() -> render('views/pList.html');
     });
 
