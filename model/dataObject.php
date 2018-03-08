@@ -7,13 +7,30 @@
  */
 
 class DataObject {
+    //Define the database handle
     protected $dbh;
 
+    /**
+     * DataObject constructor.
+     * Connect to database when initialize an instance.
+     */
     public function __construct()
     {
         $this->dbh = $this->connect();
     }
 
+    /**
+     * Disconnect database when object closing
+     */
+    public function __destruct()
+    {
+        $this->disconnect();
+    }
+
+    /**
+     * Connect to database
+     * @return PDO
+     */
     protected function connect()
     {
         try {
@@ -26,11 +43,19 @@ class DataObject {
         return $dbh;
     }
 
+    /**
+     * Disconnect database
+     */
     protected function disconnect()
     {
         $this->dbh = null;
     }
 
+    /**
+     * Transfer the values from $inputData into $data array
+     * @param $data
+     * @param $inputData
+     */
     public static function setData( &$data, $inputData )
     {
         foreach ( $inputData as $key => $value ) {
@@ -39,6 +64,16 @@ class DataObject {
         }
     }
 
+    /**
+     * Operate the SELECT sql in database
+     * @param String $tblName   the table name
+     * @param array $options    an array holding WHERE conditions,for instance,
+     *                          $options = array('id' => $id, 'name' => $name)
+     *                          means "WHERE id=$id and name=$name"
+     * @param string $orderBy   the column name used for order by
+     * @param string $order     'ASC' OR 'DESC'
+     * @return PDOStatement     the PDO statement
+     */
     protected function select($tblName, $options = array(), $orderBy = '', $order = 'ASC')
     {
         if(empty($tblName))
@@ -69,7 +104,13 @@ class DataObject {
         return $statement;
     }
 
-
+    /**
+     * Operate the INSERT sql in database
+     * @param $tblName  the table name
+     * @param $columns  an array holding the columns of the table
+     * @param $data     an array in "column => value" format to store the value need to be inserted
+     * @return bool     the result of PDO execute() method
+     */
     protected function insert($tblName, $columns, $data)
     {
         //Check the parameters
@@ -98,6 +139,56 @@ class DataObject {
 
         //Bind parameters
         foreach ($columns as $key => &$value) {
+            $statement->bindParam(':'.$key, $value);
+        }
+
+        //Execute the query
+        $result = $statement->execute();
+
+        //Return the results
+        return $result;
+    }
+
+    /**
+     * Operate the UPDATE sql in database
+     * @param String $tblName   the table name
+     * @param array $columns    an array holding the columns of the table
+     * @param array $data       the update data using a "column => value" format stored in this array
+     * @param array $options    an array holding WHERE conditions
+     * @return bool             the result of PDO execute() method
+     */
+    protected function update($tblName, $columns, $data, $options = array())
+    {
+        //Check the parameters
+        if(empty($tblName) || empty($columns) || empty($data)
+            || !is_array($columns) || !is_array($data))
+            die("Method " . __METHOD__ . ": parameters error.");
+
+        //Concat the strings for the $sql variable
+        $updateValue = "";
+        foreach ($data as $key => $value) {
+            if (array_key_exists($key, $columns))
+                $updateValue .= $key . '=:' . $key . ', ';
+        }
+        $updateValue = rtrim($updateValue, ", ");
+
+        foreach ($options as $key => $value) {
+            $whereConditions = $key . '=:' . $key . ' AND ';
+        }
+        $whereConditions = empty($whereConditions) ? '' : ' WHERE ' . rtrim($whereConditions, ' AND ');
+
+
+        //Define the query
+        $sql = "UPDATE $tblName SET $updateValue $whereConditions";
+
+        //Prepare the statement
+        $statement = $this->dbh->prepare($sql);
+
+        //Bind parameters
+        foreach ($data as $key => &$value) {
+            $statement->bindParam(':'.$key, $value);
+        }
+        foreach ($options as $key => &$value) {
             $statement->bindParam(':'.$key, $value);
         }
 

@@ -6,8 +6,47 @@
  * Time: 18:54
  */
 
-class Project extends DataObject {
+class Project extends DataObject
+{
+    //Setting the column names into arrays for each table
+    protected $projectsColumns = array(
+        'pTitle' => '',
+        'description' => '',
+        'status' => '',
+        'cName' => '',
+        'cLocation' => '',
+        'cSite' => '',
+        'url' => '',
+        'trello' => '',
+        'login' => '',
+        'github' => ''
+    );
 
+    protected $classesColumns = array(
+        'pid' => '',
+        'className' => '',
+        'quarter' => '',
+        'instructor' => '',
+        'note' => '',
+        'url' => '',
+        'trello' => '',
+        'login' => '',
+        'github' => ''
+    );
+
+    protected $contactsColumns = array(
+        'pid' => '',
+        'contactName' => '',
+        'title' => '',
+        'email' => '',
+        'phone' => ''
+    );
+
+
+    /**
+     * Get a project list from database
+     * @return array
+     */
     function getProjects()
     {
         $tblName = 'projects';
@@ -21,6 +60,11 @@ class Project extends DataObject {
     }
 
 
+    /**
+     * Get the project info from database where pid = $pid
+     * @param $pid
+     * @return mixed
+     */
     function getProject($pid)
     {
         $tblName = 'projects';
@@ -32,62 +76,104 @@ class Project extends DataObject {
     }
 
 
+    /**
+     * Add a new project info include classes and contacts info
+     * @param $data
+     */
     function addNewProject($data)
     {
-        $tblName = 'projects';
-        $columns = array(
-            'pTitle' => '',
-            'description' => '',
-            'status' => '',
-            'cName' => '',
-            'cLocation' => '',
-            'cSite' => '',
-            'url' => '',
-            'trello' => '',
-            'login' => '',
-            'github' => ''
-        );
+        //Insert into projects table
+        $this->addProject($data);
 
-        $result = $this->insert($tblName, $columns, $data);
+        //Insert into classes table
 
-        return $result;
+        //Insert into contact table
     }
 
 
-    function addClass($data)
+    /**
+     * Add data into projects table
+     * @param $data
+     * @return bool
+     */
+    protected function addProject($data)
+    {
+        $tblName = 'projects';
+        $columns = $this->projectsColumns;
+
+        return $this->insert($tblName, $columns, $data);
+    }
+
+
+    /**
+     * Add data into classes table
+     * @param $data
+     * @return bool
+     */
+    protected function addClass($data)
     {
         $tblName = 'classes';
-        $columns = array(
-            'pid' => '',
-            'className' => '',
-            'quarter' => '',
-            'instructor' => '',
-            'note' => '',
-            'url' => '',
-            'trello' => '',
-            'login' => '',
-            'github' => ''
-        );
+        $columns = $this->classesColumns;
 
-        $result = $this->insert($tblName, $columns, $data);
-
-        return $result;
+        return $this->insert($tblName, $columns, $data);
     }
 
 
-    function addContact($data)
+    /**
+     * Add data into contacts table
+     * @param $data
+     * @return bool
+     */
+    protected function addContact($data)
     {
         $tblName = 'contacts';
-        $columns = array(
-            'pid' => '',
-            'contactName' => '',
-            'title' => '',
-            'email' => '',
-            'phone' => ''
-        );
+        $columns = $this->contactsColumns;
 
-        $result = $this->insert($tblName, $columns, $data);
+        return $this->insert($tblName, $columns, $data);
+    }
 
-        return $result;
+
+    /**
+     * Update project info in project table
+     * @param $data
+     * @param $pid
+     * @return bool
+     */
+    function updateProject($data, $pid)
+    {
+        $tblName = 'projects';
+        $columns = $this->projectsColumns;
+        $options = array('pid' => $pid);
+        return $this->update($tblName, $columns, $data, $options);
+    }
+
+
+    /**
+     * Update class info in classes table
+     * @param $data
+     * @param $cid
+     * @return bool
+     */
+    function updateClass($data, $cid)
+    {
+        $tblName = 'classes';
+        $columns = $this->classesColumns;
+        $options = array('cid' => $cid);
+        return $this->update($tblName, $columns, $data, $options);
+    }
+
+
+    /**
+     * Update contacts info in contacts table
+     * @param $data
+     * @param $contact_id
+     * @return bool
+     */
+    function updateContacts($data, $contact_id)
+    {
+        $tblName = 'contacts';
+        $columns = $this->contactsColumns;
+        $options = array('contact_id' => $contact_id);
+        return $this->update($tblName, $columns, $data, $options);
     }
 }
