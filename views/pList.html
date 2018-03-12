@@ -38,6 +38,33 @@
 </nav><!-- nav bar -->
 
 <div style="padding: 20px;" class="container">
+    <repeat group="{{ @projects }}" value="{{ @project }}">
+    <div class="list">
+        <div class="row">
+            <div class="col">
+                <p class="h3">{{ @project[pTitle] }}</p>
+                <hr>
+                <p>
+                    {{ @project[description] }}
+                </p>
+
+                <div class="row">
+                    <div class="col-6">
+                        <a href="{{ @project[github] }}">Github,</a>
+                        <a href="{{ @project[trello] }}">Torello,</a>
+                        <a href="{{ @project[url] }}">Project Url</a>
+                    </div>
+
+                    <div class="col-6 text-right">
+                        <button class="btn btn-outline-primary rounded-0">View</button>
+                        <!--<a class="float-right" href="">View</a>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </repeat>
+
     <div class="list">
         <div class="row">
             <div class="col">
