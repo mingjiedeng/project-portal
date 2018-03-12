@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,7 +13,7 @@
             color: white;
         }
         body{
-            /*background: linear-gradient(to top left, #00FF17,#0032FF);*/
+            background: linear-gradient(to top left, #00FF17,#0032FF);
         }
     </style>
 </head>
@@ -95,7 +95,7 @@
 
 <div class="container">
     <div class="new-form">
-        <form action="#" method="post">
+        <form action="../model/validation.php" method="post">
             <fieldset>
                 <div class="row">
                     <div class="col-6">
@@ -108,12 +108,14 @@
                 <hr style="margin-top: 2px;">
                 <div class="form-group row">
                     <div class="col-md-6">
-                        <input type="text" name="title" class="" placeholder="Project Title:">
+                        <span id="title-error" class="text-danger"></span>
+                        <input id="title" type="text" name="title" class="" placeholder="Project Title:">
                     </div>
 
                     <label class="col-md-2 col-form-label text-md-right">Project Status:</label>
                     <div class="col-md-4">
-                        <select style="font-weight: 100;" name="status" class="form-control">
+                        <span id="status-error" class="text-danger"></span>
+                        <select id="status" style="font-weight: 100;" name="status" class="form-control">
                             <option value="none">--Select--</option>
                             <option value="Pending">Pending</option>
                             <option value="Active">Active</option>
@@ -125,23 +127,28 @@
 
                 <div class="form-group row">
                     <div class="col-md-6">
-                        <textarea name="description" style="font-weight: 100;" rows="2">Description:</textarea>
+                        <span id="description-error" class="text-danger"></span>
+                        <textarea id="description" name="description" style="font-weight: 100;" rows="2" placeholder="Description:"></textarea>
                     </div>
                     <div class="col-md-6">
-                        <textarea name="note" style="font-weight: 100;" rows="2">Note:</textarea>
+                        <span id="note-error" class="text-danger"></span>
+                        <textarea id="note" name="note" style="font-weight: 100;" rows="2" placeholder="Note:"></textarea>
                     </div>
                     <!--<div class="col-md-2 text-md-right"><a class="link" id="add-url" href="" data-toggle="modal" data-target="#myModal">Add Url</a></div>-->
                 </div>
 
                 <div class="form-group row">
                     <div class="col-md-4">
-                        <input type="text" name="project-link" class="" placeholder="Project link:">
+                        <span id="project-link-error" class="text-danger"></span>
+                        <input id="project-link" type="text" name="project-link" class="" placeholder="Project link:">
                     </div>
                     <div class="col-md-4">
-                        <input type="text" name="torelo-link" class="" placeholder="Torelo link:">
+                        <span id="torelo-link-error" class="text-danger"></span>
+                        <input id="torelo-link" type="text" name="torelo-link" class="" placeholder="Torelo link:">
                     </div>
                     <div class="col-md-4">
-                        <input type="text" name="github-link" class="" placeholder="Github link:">
+                        <span id="github-link-error" class="text-danger"></span>
+                        <input id="github-link" type="text" name="github-link" class="" placeholder="Github link:">
                     </div>
                 </div>
 
@@ -157,13 +164,16 @@
                 <hr style="margin-top: 2px;">
                 <div class="form-group row">
                     <div class="col-md-4">
-                        <input type="text" name="classname[]" placeholder="Class name:">
+                        <span id="classname_1-error" class="text-danger"></span>
+                        <input id="classname_1" type="text" name="classname[]" placeholder="Class name:">
                     </div>
                     <div class="col-md-4">
-                        <input type="text" name="quarter[]" placeholder="Quarter:">
+                        <span id="quarter_1-error" class="text-danger"></span>
+                        <input id="quarter_1" type="text" name="quarter[]" placeholder="Quarter:">
                     </div>
                     <div class="col-md-4">
-                        <input type="text" name="year[]" placeholder="Year:">
+                        <span id="year_1-error" class="text-danger"></span>
+                        <input id="year_1" type="text" name="year[]" placeholder="Year:">
                     </div>
                 </div>
 
@@ -181,17 +191,20 @@
                 <hr style="margin-top: 2px;">
                 <div class="form-group row">
                     <div class="col-md-6">
-                        <input type="text" name="company" placeholder="Company name:">
+                        <span id="company-error" class="text-danger"></span>
+                        <input id="company" type="text" name="company" placeholder="Company name:">
                     </div>
 
                     <div class="col-md-6">
-                        <input type="text" name="location" placeholder="Location:">
+                        <span id="location-error" class="text-danger"></span>
+                        <input id="location" type="text" name="location" placeholder="Location:">
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col-md-6">
-                        <input type="text" name="site-url" placeholder="Site url:">
+                        <span id="site-url-error" class="text-danger"></span>
+                        <input id="site-url" type="text" name="site-url" placeholder="Site url:">
                     </div>
                 </div>
             </fieldset> <!--company info end-->
@@ -201,21 +214,25 @@
                 <hr style="margin-top: 2px;">
                 <div class="form-group row">
                     <div class="col-md-6">
-                        <input type="text" name="client-name" placeholder="Name:">
+                        <span id="client-name-error" class="text-danger"></span>
+                        <input id="client-name" type="text" name="client-name" placeholder="Name:">
                     </div>
 
                     <div class="col-md-6">
-                        <input type="text" name="client-title" placeholder="Title:">
+                        <span id="client-title-error" class="text-danger"></span>
+                        <input id="client-title" type="text" name="client-title" placeholder="Title:">
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col-md-6">
-                        <input type="text" name="client-phone" placeholder="Phone:">
+                        <span id="phone-error" class="text-danger"></span>
+                        <input id="phone" type="text" name="client-phone" placeholder="Phone:">
                     </div>
 
                     <div class="col-md-6">
-                        <input type="text" name="client-email" placeholder="Email:">
+                        <span id="email-error" class="text-danger"></span>
+                        <input id="email" type="text" name="client-email" placeholder="Email:">
                     </div>
                 </div>
 
@@ -226,9 +243,11 @@
                 </div>
             </fieldset> <!--contact info end-->
 
+            <span id="test"></span>
+
             <div class="form-group row">
                 <div class="col-md-2 offset-md-10">
-                    <button type="submit" style="font-weight: 300; font-size: 20px; color: white; width: 100%; background-color: #4A235A;" class="btn">Confirm</button>
+                    <button type="submit" style="border-radius: 25px; font-weight: 300; font-size: 20px; color: white; width: 100%; background-color: #A600FF; " class="btn">Submit</button>
                 </div>
             </div>
         </form>
@@ -240,73 +259,5 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
 </body>
 <script src="http://code.jquery.com/jquery.js"></script>
-<script>
-    $(document).ready(function() {
-        //show the form after page load
-        $(".new-form").hide();
-        $(".new-form").show(300);
-        $("input,textarea").hide();
-        $("#note").hide();
-
-        //fade in content
-        $("input,textarea").each(function (index) {
-            $(this).delay(30*index).fadeIn(800);
-        });
-
-        //change modal fields on click
-        $("#add-url").click(function(){
-            $("#exampleModalLabel").html("Add Url");
-            $("#url").show();
-            $("#add-login").hide();
-            $("#add-contact").hide();
-        });
-
-        $("#add-cred").click(function(){
-            $("#exampleModalLabel").html("Add Credentials");
-            $("#add-login").show();
-            $("#url").hide();
-            $("#add-contact").hide();
-        });
-
-        $("#add-conct").click(function(){
-            $("#exampleModalLabel").html("Add Contact");
-            $("#add-contact").show();
-            $("#url").hide();
-            $("#add-login").hide();
-        });
-
-        //add more classes field on button click
-        var class_id = 0;
-        $("#remove-class").hide();
-        $("#add-class").click(function() {
-            $("#remove-class").show(300);
-            if(class_id < 4)
-            {
-                class_id++;
-                $("#class-info").append("<div id='" + class_id + "' class='form-group row'>\n" +
-                    "                    <div class='col-md-4'>\n" +
-                    "                        <input type='text' name='classname[]' placeholder='Class name:'>\n" +
-                    "                    </div>\n" +
-                    "                    <div class='col-md-4'>\n" +
-                    "                        <input type='text' name='quarter[]' placeholder='Quarter:'>\n" +
-                    "                    </div>\n" +
-                    "                    <div class='col-md-4'>\n" +
-                    "                        <input type='text' name='year[]' placeholder='Year:'>\n" +
-                    "                    </div>\n" +
-                    "                </div>");
-                $('#'+class_id).hide();
-            }
-            $("#"+class_id).show(300);
-        });
-
-        $("#remove-class").click(function(){
-            $('#'+class_id).remove();
-            if(class_id > 0) {
-               class_id--;
-            }
-            if(class_id == 0)
-               $("#remove-class").fadeOut("slow");
-        });
-    });
-</script>
+<script src="./scripts/add-project.js"></script>
 </html>
