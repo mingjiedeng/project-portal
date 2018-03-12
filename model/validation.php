@@ -52,7 +52,7 @@ function validEmail($email)
 
 //validate project status
 $projectStatus = array("Pending", "Active", "Maintenance", "Retired");
-echo json_encode($projectStatus);
+//echo json_encode($projectStatus);
 if($name == 'status') {
     if(!in_array($input, $projectStatus))
         echo "Please select the project status";
