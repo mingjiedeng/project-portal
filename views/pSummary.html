@@ -5,16 +5,345 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
-    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="./styles/styles.css">
+    <link rel="stylesheet" href="./styles/add-project.css">
+    <link rel="stylesheet" href="./styles/summary-styles.css">
+
     <title>Project Summary</title>
+    <style>
+
+    </style>
 </head>
 <body>
+<nav class="navbar navbar-inverse navbar-toggleable" style="background-color: #1C2833;">
+    <div id="icon-bar" class="navbar-nav row">
+        <a style="margin-left: 0; padding-left: 0;" class="navbar-brand" href="{{@BASE}}"><img style="width: 50px;" src="./images/code.svg"> <span id="brand-head">Project Portal</span></a>
+    </div>
+
+    <div id="myContent">
+        <div class="navbar-nav ml-auto">
+            <a class="nav-item nav-link active thin" href="" style="letter-spacing: 1px;">Sign out</a>
+        </div>
+    </div>
+</nav><!-- nav bar -->
 <p>{{ @project['pTitle'] }}</p>
 <p>{{ @project['description'] }}</p>
 <p>{{ @project['cName'] }}</p>
+
+<div class="container">
+<form action="" method="post">
+    <div class="new-form read-form" id="read_project-info">
+        <div class="row">
+            <div class="col-6">
+                <legend>Project Information</legend>
+            </div>
+            <div class="col-6 text-right">
+                <button id="project-info" type="button" class="btn btn-sm btn-outline-info edit" name="edit">Edit</button>
+            </div>
+        </div>
+        <hr style="margin-top: 2px;">
+        <div class="row form-group">
+            <div class="col-md-3">
+                <p><span class="text-muted">Project Title:</span> Project A</p>
+            </div>
+            <div class="col-md-3">
+                <p><span class="text-muted">Project Status:</span> Pending</p>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div style="padding-top: 8px;" class="col-md-6 alert alert-success">
+                <p><strong>Description:</strong> Online web application for students</p>
+            </div>
+            <div style="padding-top: 8px;" class="col-md-5 offset-md-1 alert alert-info">
+                <p><strong>Note:</strong> This is project needs additional features for meeting the client requirements</p>
+            </div>
+        </div>
+        <div style="margin-top: 25px;" class="form-group row">
+            <div class="col-md-4">
+                <p class="text-success"><span class="text-muted">Project Link:</span> <a href="" target="_blank">http://www.news.com</a></p>
+            </div>
+            <div class="col-md-4">
+                <p class="text-success"><span class="text-muted">Torelo Link:</span> <a href="" target="_blank">http://www.yahoo.com</a></p>
+            </div>
+            <div class="col-md-4">
+                <p class="text-success"><span class="text-muted">Github Link:</span> <a href="" target="_blank">http://www.github.com</a></p>
+            </div>
+        </div>
+    </div> <!--project info read only-->
+
+    <div id="edit_project-info" class="new-form edit-form">
+        <fieldset>
+            <div class="row">
+                <div class="col-6">
+                    <legend>Project Information</legend>
+                </div>
+            </div>
+            <hr style="margin-top: 2px;">
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <span id="title-error" class="text-danger"></span>
+                    <input id="title" type="text" name="title" class="" placeholder="Project Title:">
+                </div>
+
+                <label class="col-md-2 col-form-label text-md-right">Project Status:</label>
+                <div class="col-md-4">
+                    <span id="status-error" class="text-danger"></span>
+                    <select id="status" style="font-weight: 100;" name="status" class="form-control">
+                        <option value="none">--Select--</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Active">Active</option>
+                        <option value="Maintenance">Maintenance</option>
+                        <option value="Retired">Retired</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <span id="description-error" class="text-danger"></span>
+                    <textarea id="description" name="description" style="font-weight: 100;" rows="2" placeholder="Description:"></textarea>
+                </div>
+                <div class="col-md-6">
+                    <span id="note-error" class="text-danger"></span>
+                    <textarea id="note" name="note" style="font-weight: 100;" rows="2" placeholder="Note:"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-4">
+                    <span id="project-link-error" class="text-danger"></span>
+                    <input id="project-link" type="text" name="project-link" class="" placeholder="Project link:">
+                </div>
+                <div class="col-md-4">
+                    <span id="torelo-link-error" class="text-danger"></span>
+                    <input id="torelo-link" type="text" name="torelo-link" class="" placeholder="Torelo link:">
+                </div>
+                <div class="col-md-4">
+                    <span id="github-link-error" class="text-danger"></span>
+                    <input id="github-link" type="text" name="github-link" class="" placeholder="Github link:">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 text-md-right">
+                    <button type="button" class="btn btn-outline-success update">Update</button>
+                </div>
+            </div>
+        </fieldset> <!--project info editable-->
+    </div>
+
+    <div class="new-form read-form" id="read_class-info">
+        <div class="row">
+            <div class="col-6">
+                <legend>Class Information</legend>
+            </div>
+            <div class="col-6 text-right">
+                <button id="class-info" type="button" class="btn btn-sm btn-outline-info edit" name="edit">Edit</button>
+            </div>
+        </div>
+        <hr style="margin-top: 2px;">
+        <div class="row form-group">
+            <div class="col-md-3">
+                <p><span class="text-muted">Class:</span> IT 327</p>
+            </div>
+            <div class="col-md-3">
+                <p><span class="text-muted">Quarter:</span> Winter</p>
+            </div>
+            <div class="col-md-3">
+                <p><span class="text-muted">Year:</span> 2017</p>
+            </div>
+        </div>
+    </div> <!--class info read only-->
+
+    <div id="edit_class-info" class="new-form edit-form">
+        <fieldset>
+            <legend>Class Information</legend>
+            <hr style="margin-top: 2px;">
+            <div class="form-group row">
+                <div class="col-md-4">
+                    <span id="classname_1-error" class="text-danger"></span>
+                    <input id="classname_1" type="text" name="classname[]" placeholder="Class name:">
+                </div>
+                <div class="col-md-4">
+                    <span id="quarter_1-error" class="text-danger"></span>
+                    <input id="quarter_1" type="text" name="quarter[]" placeholder="Quarter:">
+                </div>
+                <div class="col-md-4">
+                    <span id="year_1-error" class="text-danger"></span>
+                    <input id="year_1" type="text" name="year[]" placeholder="Year:">
+                </div>
+            </div>
+            <!--<div class="row">-->
+                <!--<div class="col-md-6">-->
+                    <!--<button type="button" class="btn btn-sm btn-outline-success rounded-0" id="add-class">Add Class</button>-->
+                    <!--<button type="button" class="btn btn-sm btn-outline-danger rounded-0" id="remove-class">Remove Class</button>-->
+                <!--</div>-->
+            <!--</div>-->
+            <div class="row">
+                <div class="col-md-12 text-md-right">
+                    <button type="button" class="btn btn-outline-success update">Update</button>
+                </div>
+            </div>
+        </fieldset> <!--class info editable-->
+    </div>
+
+    <div class="new-form read-form" id="read_company-info">
+        <div class="row">
+            <div class="col-6">
+                <legend>Company Information</legend>
+            </div>
+            <div class="col-6 text-right">
+                <button id="company-info" type="button" class="btn btn-sm btn-outline-info edit" name="edit">Edit</button>
+            </div>
+        </div>
+        <hr style="margin-top: 2px;">
+        <div class="row form-group">
+            <div class="col-md-4">
+                <p><span class="text-muted">Company Name:</span> Abc company</p>
+            </div>
+            <div class="col-md-4">
+                <p><span class="text-muted">Location:</span> Seattle</p>
+            </div>
+            <div class="col-md-4">
+                <p><span class="text-muted">Site url:</span> <a href="">http://www.alpha.co</a></p>
+            </div>
+        </div>
+    </div> <!--company info read only-->
+
+    <div id="edit_company-info" class="new-form edit-form">
+        <fieldset>
+            <legend>Company Information</legend>
+            <hr style="margin-top: 2px;">
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <span id="company-error" class="text-danger"></span>
+                    <input id="company" type="text" name="company" placeholder="Company name:">
+                </div>
+
+                <div class="col-md-6">
+                    <span id="location-error" class="text-danger"></span>
+                    <input id="location" type="text" name="location" placeholder="Location:">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <span id="site-url-error" class="text-danger"></span>
+                    <input id="site-url" type="text" name="site-url" placeholder="Site url:">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-md-right">
+                    <button type="button" class="btn btn-outline-success update">Update</button>
+                </div>
+            </div>
+        </fieldset> <!--company info editable-->
+    </div>
+
+    <div class="new-form read-form" id="read_contact-info">
+        <div class="row">
+            <div class="col-6">
+                <legend>Contact Information</legend>
+            </div>
+            <div class="col-6 text-right">
+                <button id="contact-info" type="button" class="btn btn-sm btn-outline-info edit" name="edit">Edit</button>
+            </div>
+        </div>
+        <hr style="margin-top: 2px;">
+        <div class="row form-group">
+            <div class="col-md-3">
+                <p><span class="text-muted">Name:</span> Aishwarya Rai</p>
+            </div>
+            <div class="col-md-3">
+                <p><span class="text-muted">Title:</span> Manager</p>
+            </div>
+            <div class="col-md-3">
+                <p><span class="text-muted">Phone:</span> 888-473-2222</p>
+            </div>
+            <div class="col-md-3">
+                <p><span class="text-muted">Email:</span> example@mail.com</p>
+            </div>
+        </div>
+    </div> <!--contact info read only-->
+
+    <div id="edit_contact-info" class="new-form edit-form">
+        <fieldset>
+            <legend>Contact Information</legend>
+            <hr style="margin-top: 2px;">
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <span id="client-name-error" class="text-danger"></span>
+                    <input id="client-name" type="text" name="client-name" placeholder="Name:">
+                </div>
+
+                <div class="col-md-6">
+                    <span id="client-title-error" class="text-danger"></span>
+                    <input id="client-title" type="text" name="client-title" placeholder="Title:">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <span id="phone-error" class="text-danger"></span>
+                    <input id="phone" type="text" name="client-phone" placeholder="Phone:">
+                </div>
+
+                <div class="col-md-6">
+                    <span id="email-error" class="text-danger"></span>
+                    <input id="email" type="text" name="client-email" placeholder="Email:">
+                </div>
+            </div>
+
+            <!--<div class="row">-->
+                <!--<div class="col-md-2">-->
+                    <!--<a href="" class="link" id="add-conct" data-toggle="modal" data-target="#myModal">Add contact</a>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <div class="row">
+                <div class="col-md-12 text-md-right">
+                    <button type="button" class="btn btn-outline-success update">Update</button>
+                </div>
+            </div>
+        </fieldset> <!--contact info end-->
+    </div>
+</form>
+</div>
+
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
 </body>
+<script src="http://code.jquery.com/jquery.js"></script>
+<script>
+    // $("button").click(function(){
+    //    $("input").removeAttr("readonly");
+    //    $("input").focus();
+    //    $("input").css("border", "1px solid black");
+    // });
+
+    //hide all edit forms at first
+    $(".edit-form").hide();
+    $(".edit").hide();
+    //show edit form after clicking on edit button
+    $(".edit").click(function () {
+       var block = $(this).attr('id');
+       $("#edit_"+block).show(250);
+       $("#read_"+block).hide(150);
+    });
+
+    //hide edit form and show readable form data again
+    //after clicking update button
+    $(".update").click(function () {
+        $(".edit-form").hide(150);
+        $(".read-form").show(250);
+    });
+
+    //show edit on hover current block
+    $(".read-form").mouseover(function () {
+       $('.edit').hide();
+       $(this).find(".edit").show();
+    });
+</script>
 </html>
