@@ -1,0 +1,35 @@
+.new-form {
+    background-color: #EAECEE;
+    margin: 5%;
+    margin-top: 2%;
+    margin-bottom: 0;
+    padding: 18px;
+}
+
+input, textarea, select{
+    outline: none;
+    border: none;
+    width: 100%;
+    padding: 6px;
+    padding-left: 12px;
+}
+.read-form:hover{
+    background-color: white;
+}
+
+#brand-head{
+    font-weight: 100;
+    font-size: 24px;
+    letter-spacing: 3px;
+}
+
+.thin{
+    color: white;
+    font-weight: 100;
+    font-size: 24px;
+    letter-spacing: 1px;
+}
+.thin:hover{
+    color: white;
+    opacity: 0.5;
+}

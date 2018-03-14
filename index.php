@@ -4,8 +4,8 @@
 
     //Require the autoload file
     require_once('vendor/autoload.php');
-    require_once '/home/gsinghgr/config.php';
-//    require_once '/home/mdenggre/db-config.php';
+//    require_once '/home/gsinghgr/config.php';
+    require_once '/home/mdenggre/db-config.php';
 
 
 //Create an instance of the Base class
@@ -29,21 +29,13 @@
         echo Template::instance() -> render('views/pList.html');
     });
 
-    $f3->route('GET /project/@pid', function($f3, $params) {
-        echo "<p>This is the summary page for a project, and also for the info modification.</p>
-              <p>The project info is divided by zone like client info, class info and so on. <br>
-                 The input fields are disable(can't be modify) by default.<br>
-                 If the user already sign in, when the cursor move on the zone, <br>
-                 the zone will high light or show up a frame around the zone, and an edit button will show up.<br>
-                 If the user click the edit button, the fields will change to enable, <br>
-                 then user can modify and submit the final change using Ajax, <br>
-                 after that the info has been refresh and the fields return to disable.
-                 </p>";
-
-        $project = new Project();
-        $project = $project->getProject($params['pid']);
-        $f3->set("project", $project);
-
+//    $f3->route('GET /project/@pid', function($f3, $params) {
+    $f3->route('GET|POST /project', function($f3, $params) { //removed params temporary
+//        $project = new Project();
+//        $projects = $project->getProject($params['pid']);
+//        $f3->set("project", $projects);
+//        $f3->set('login', 'set');
+//        $f3->set('edit', 'set');
         echo Template::instance() -> render('views/pSummary.html');
     });
 
