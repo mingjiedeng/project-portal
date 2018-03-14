@@ -40,7 +40,8 @@
                  after that the info has been refresh and the fields return to disable.
                  </p>";
 
-        $project = getProject($params['pid']);
+        $project = new Project();
+        $project = $project->getProject($params['pid']);
         $f3->set("project", $project);
 
         echo Template::instance() -> render('views/pSummary.html');
