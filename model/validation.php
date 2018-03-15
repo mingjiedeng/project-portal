@@ -31,8 +31,6 @@ function validateClassInfo($name, $input)
 {
     if(empty($input))
         echo "Missing $name";
-    else if($name == 'year' && !validDigit($input))
-        echo "Invalid $name";
     else if(!validString($input))
         echo "Invalid $name";
 }
@@ -95,6 +93,6 @@ else if($name == 'phone') {
 
 //validate class information
 $temp = explode("_", $name);
-if($temp[0] == 'classname' || $temp[0] == 'quarter' || $temp[0] == 'year') {
+if($temp[0] == 'classname' || $temp[0] == 'quarter' || $temp[0] == 'instructor') {
     validateClassInfo($temp[0], $input);
 }

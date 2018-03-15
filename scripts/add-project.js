@@ -45,15 +45,15 @@ $(document).ready(function() {
             $("#class-info").append("<div id='" + class_id + "' class='form-group row'>\n" +
                 "                    <div class='col-md-4'>\n" +
                 "                    <span id="+"classname_"+ input_id +"-error class='text-danger'></span>\n"+
-                "                        <input id="+"classname_"+input_id+" type='text' name='classname[]' placeholder='Class name:'>\n" +
+                "                        <input id="+"classname_"+input_id+" type='text' name='className[]' placeholder='Class name:'>\n" +
                 "                    </div>\n" +
                 "                    <div class='col-md-4'>\n" +
                 "                    <span id="+"quarter_"+ input_id +"-error class='text-danger'></span>\n"+
-                "                        <input id="+"quarter_"+input_id+" type='text' name='quarter[]' placeholder='Quarter:'>\n" +
+                "                        <input id="+"quarter_"+input_id+" type='text' name='quarter[]' placeholder='Quarter: example spring 2017'>\n" +
                 "                    </div>\n" +
                 "                    <div class='col-md-4'>\n" +
-                "                    <span id="+"year_"+ input_id +"-error class='text-danger'></span>\n"+
-                "                        <input id="+"year_"+input_id+" type='text' name='year[]' placeholder='Year:'>\n" +
+                "                    <span id="+"instructor_"+ input_id +"-error class='text-danger'></span>\n"+
+                "                        <input id="+"instructor_"+input_id+" type='text' name='instructor[]' placeholder='Instructor:'>\n" +
                 "                    </div>\n" +
                 "                </div>");
             $('#'+class_id).hide();
@@ -97,19 +97,23 @@ $(document).ready(function() {
         });
     });
 
+    //send form data after user hit submit button
     $('form').on('submit', function (e) {
-        e.preventDefault();
+        e.preventDefault(); //prevent page reload
 
-        $.ajax({
-            type: 'post',
-            url: 'model/validation.php',
-            data: $('form').serialize(),
-            dataType: 'json'
-        }).done(function(result) {
-            $.each(result, function(index, item){
-                $("#test").append(item);
-            });
-        }).fail(function(data) {
+        //set submit flag
+        var set = 'submit';
+        var data = $('form').serializeArray(); //serialize form data
+        data.push({name:'submit', value:set}); //set submit
+
+        $.post("./addProject", data, function (result) {
+            if(result.includes(":")) {
+                var results = jQuery.parseJSON(result); //covert result into json
+                $.each(results, function (index, item) { //loop over and get the values
+                    var input_name = item.split(":");
+                    $("#" + input_name[0] + "-error").html(input_name[1]); //show errors
+                });
+            }
         });
     });
 });

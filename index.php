@@ -4,8 +4,8 @@
 
     //Require the autoload file
     require_once('vendor/autoload.php');
-//    require_once '/home/gsinghgr/config.php';
-    require_once '/home/mdenggre/db-config.php';
+    require_once '/home/gsinghgr/config.php';
+//    require_once '/home/mdenggre/db-config.php';
 
 
     //Create an instance of the Base class
@@ -43,9 +43,12 @@
         {
             $post = $_POST; //variable used in validation.php
             include_once "model/validate-onsubmit.php";
-//            $project = new Project();
-//            $project->addNewProject($_POST);
 
+            //insert data into database if there is no error
+            if($success) {
+                $project = new Project();
+                $project->addNewProject($_POST);
+            }
         }
         else if(!isset($_POST['submit'])){
             echo Template::instance() -> render('views/add-project.html');

@@ -32,6 +32,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!--<form action="../model/validation.php" method="post">-->
     <div class="modal-dialog" role="document">
         <div style="background-color: #EAECEE;" class="modal-content rounded-0">
             <div style="background-color: #1C2833;" class="modal-header rounded-0">
@@ -41,15 +42,20 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div id="add-login" class="row">
-                    <div class="col-md-6">
-                        <input type="text" name="username" class="form-control-sm" placeholder="Username:">
-                    </div>
+                <form id="login-form" action="" method="post">
+                    <div class="text-center"><span id="login-error" class="text-danger"></span></div>
+                    <div id="add-login" class="row">
+                        <div class="col-md-6">
+                            <span id="username-error" class="text-danger"></span>
+                            <input id="username" type="text" name="username" class="form-control-sm" placeholder="Username:">
+                        </div>
 
-                    <div class="col-md-6">
-                        <input type="text" name="password" class="form-control-sm" placeholder="Password:">
+                        <div class="col-md-6">
+                            <span id="password-error" class="text-danger"></span>
+                            <input id="password" type="text" name="password" class="form-control-sm" placeholder="Password:">
+                        </div>
                     </div>
-                </div>
+                </form>
 
                 <div id="add-contact">
                     <div class="row form-group">
@@ -72,7 +78,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" name="add" class="btn btn-outline-success rounded-0">Add</button>
+                <button id="add-btn" type="button" name="add" class="btn btn-outline-success rounded-0">Add</button>
             </div>
         </div>
     </div>
@@ -146,7 +152,7 @@
 
             <fieldset>
                 <legend>Class Information</legend>
-                <span id="class-error" class="text-danger"></span>
+                <span id="classname_0-error" class="text-danger"></span>
                 <hr style="margin-top: 2px;">
                 <div class="form-group row">
                     <div class="col-md-4">
@@ -155,11 +161,11 @@
                     </div>
                     <div class="col-md-4">
                         <span id="quarter_1-error" class="text-danger"></span>
-                        <input id="quarter_1" type="text" name="quarter[]" placeholder="Quarter:">
+                        <input id="quarter_1" type="text" name="quarter[]" placeholder="Quarter: example spring 2017">
                     </div>
                     <div class="col-md-4">
-                        <span id="year_1-error" class="text-danger"></span>
-                        <input id="year_1" type="text" name="year[]" placeholder="Year:">
+                        <span id="instructor_1-error" class="text-danger"></span>
+                        <input id="instructor_1" type="text" name="instructor[]" placeholder="Instructor:">
                     </div>
                 </div>
 
@@ -245,6 +251,24 @@
 <script src="http://code.jquery.com/jquery.js"></script>
 <script src="./scripts/add-project.js"></script>
 <script>
+    $('#add-btn').click(function () {
+        var set = 'submit';
+        var data = $('#login-form').serializeArray();
+        data.push({name:'submit', value:set});
 
+        $.post("model/validate-hiddenfields.php", data, function (result) {
+            // alert(result);
+            if(result != 'success') {
+                $("#login-error").html(result);
+            } else {
+                $("#username").hide();
+                $("#password").hide();
+                $("#add-btn").hide();
+                $("#login-error").removeClass('text-danger');
+                $("#login-error").addClass('text-success');
+                $("#login-error").html("Login credentials has been added successfully");
+            }
+        });
+    });
 </script>
 </html>
