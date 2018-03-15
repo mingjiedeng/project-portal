@@ -4,10 +4,10 @@
  
 -- Drop existing tables
 
-DROP TABLE IF EXISTS  projects;
 DROP TABLE IF EXISTS  classes; 
 DROP TABLE IF EXISTS  contacts;
 DROP TABLE IF EXISTS  users;
+DROP TABLE IF EXISTS  projects;
 
 
 
@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS `projects` (
   `pid` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'project id',
   `pTitle` VARCHAR(50) NOT NULL COMMENT 'project title',
   `description` VARCHAR(3000) NULL DEFAULT NULL COMMENT 'project description',
+  `note` varchar(5000) NOT NULL COMMENT 'instructor write the note for project',
   `status` VARCHAR(20) NULL DEFAULT NULL COMMENT 'project status',
   `cName` VARCHAR(50) NULL DEFAULT NULL COMMENT 'company name (client)',
   `cLocation` VARCHAR(200) NULL DEFAULT NULL COMMENT 'company location (client)',
@@ -42,7 +43,6 @@ CREATE TABLE IF NOT EXISTS `classes` (
   `className` varchar(30) DEFAULT NULL COMMENT 'class name like "IT305"',
   `quarter` varchar(30) NOT NULL COMMENT '"2017_4" means 2017 fall quarter',
   `instructor` varchar(30) NOT NULL,
-  `note` varchar(5000) NOT NULL,
   `url` VARCHAR(200) NULL DEFAULT NULL COMMENT 'site url',
   `trello` VARCHAR(1000) NULL DEFAULT NULL COMMENT 'trello info',
   `login` VARCHAR(1000) NULL DEFAULT NULL COMMENT 'login credential',
