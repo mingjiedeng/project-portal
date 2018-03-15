@@ -29,11 +29,11 @@
         echo Template::instance() -> render('views/pList.html');
     });
 
-//    $f3->route('GET /project/@pid', function($f3, $params) {
-    $f3->route('GET|POST /project', function($f3, $params) { //removed params temporary
-//        $project = new Project();
-//        $projects = $project->getProject($params['pid']);
-//        $f3->set("project", $projects);
+    $f3->route('GET /project/@pid', function($f3, $params) {
+//    $f3->route('GET|POST /project', function($f3, $params) { //removed params temporary
+        $project = new Project();
+        $projects = $project->getProject($params['pid']);
+        $f3->set("project", $projects);
 //        $f3->set('login', 'set');
 //        $f3->set('edit', 'set');
         echo Template::instance() -> render('views/pSummary.html');
