@@ -41,21 +41,6 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div id="url" class="row">
-                    <div class="col-md-4">
-                        <select style="font-weight: 100;" name="status" class="form-control-sm">
-                            <option value="none">--Url Type--</option>
-                            <option value="Project Url">Project Url</option>
-                            <option value="Torrelo">Torrelo</option>
-                            <option value="Github">Github</option>
-                        </select>
-                    </div>
-
-                    <div class="col-md-8">
-                        <input type="text" name="url" class="form-control-sm" placeholder="Url:">
-                    </div>
-                </div>
-
                 <div id="add-login" class="row">
                     <div class="col-md-6">
                         <input type="text" name="username" class="form-control-sm" placeholder="Username:">
@@ -109,7 +94,7 @@
                 <div class="form-group row">
                     <div class="col-md-6">
                         <span id="title-error" class="text-danger"></span>
-                        <input id="title" type="text" name="title" class="" placeholder="Project Title:">
+                        <input id="title" type="text" name="pTitle" class="" placeholder="Project Title:">
                     </div>
 
                     <label class="col-md-2 col-form-label text-md-right">Project Status:</label>
@@ -140,15 +125,15 @@
                 <div class="form-group row">
                     <div class="col-md-4">
                         <span id="project-link-error" class="text-danger"></span>
-                        <input id="project-link" type="text" name="project-link" class="" placeholder="Project link:">
+                        <input id="project-link" type="text" name="url" class="" placeholder="Project link:">
                     </div>
                     <div class="col-md-4">
                         <span id="torelo-link-error" class="text-danger"></span>
-                        <input id="torelo-link" type="text" name="torelo-link" class="" placeholder="Torelo link:">
+                        <input id="torelo-link" type="text" name="trello" class="" placeholder="Torelo link:">
                     </div>
                     <div class="col-md-4">
                         <span id="github-link-error" class="text-danger"></span>
-                        <input id="github-link" type="text" name="github-link" class="" placeholder="Github link:">
+                        <input id="github-link" type="text" name="github" class="" placeholder="Github link:">
                     </div>
                 </div>
 
@@ -161,11 +146,12 @@
 
             <fieldset>
                 <legend>Class Information</legend>
+                <span id="class-error" class="text-danger"></span>
                 <hr style="margin-top: 2px;">
                 <div class="form-group row">
                     <div class="col-md-4">
                         <span id="classname_1-error" class="text-danger"></span>
-                        <input id="classname_1" type="text" name="classname[]" placeholder="Class name:">
+                        <input id="classname_1" type="text" name="className[]" placeholder="Class name:">
                     </div>
                     <div class="col-md-4">
                         <span id="quarter_1-error" class="text-danger"></span>
@@ -192,19 +178,19 @@
                 <div class="form-group row">
                     <div class="col-md-6">
                         <span id="company-error" class="text-danger"></span>
-                        <input id="company" type="text" name="company" placeholder="Company name:">
+                        <input id="company" type="text" name="cName" placeholder="Company name:">
                     </div>
 
                     <div class="col-md-6">
                         <span id="location-error" class="text-danger"></span>
-                        <input id="location" type="text" name="location" placeholder="Location:">
+                        <input id="location" type="text" name="cLocation" placeholder="Location:">
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col-md-6">
                         <span id="site-url-error" class="text-danger"></span>
-                        <input id="site-url" type="text" name="site-url" placeholder="Site url:">
+                        <input id="site-url" type="text" name="cSite" placeholder="Site url:">
                     </div>
                 </div>
             </fieldset> <!--company info end-->
@@ -215,24 +201,24 @@
                 <div class="form-group row">
                     <div class="col-md-6">
                         <span id="client-name-error" class="text-danger"></span>
-                        <input id="client-name" type="text" name="client-name" placeholder="Name:">
+                        <input id="client-name" type="text" name="contactName" placeholder="Name:">
                     </div>
 
                     <div class="col-md-6">
                         <span id="client-title-error" class="text-danger"></span>
-                        <input id="client-title" type="text" name="client-title" placeholder="Title:">
+                        <input id="client-title" type="text" name="title" placeholder="Title:">
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col-md-6">
                         <span id="phone-error" class="text-danger"></span>
-                        <input id="phone" type="text" name="client-phone" placeholder="Phone:">
+                        <input id="phone" type="text" name="phone" placeholder="Phone:">
                     </div>
 
                     <div class="col-md-6">
                         <span id="email-error" class="text-danger"></span>
-                        <input id="email" type="text" name="client-email" placeholder="Email:">
+                        <input id="email" type="text" name="email" placeholder="Email:">
                     </div>
                 </div>
 
@@ -243,11 +229,9 @@
                 </div>
             </fieldset> <!--contact info end-->
 
-            <span id="test"></span>
-
             <div class="form-group row">
                 <div class="col-md-2 offset-md-10">
-                    <button type="submit" style="border-radius: 25px; font-weight: 300; font-size: 20px; color: white; width: 100%; background-color: #A600FF; " class="btn">Submit</button>
+                    <button name="submit" id="submit" type="submit" style="border-radius: 25px; font-weight: 300; font-size: 20px; color: white; width: 100%; background-color: #A600FF; " class="btn">Submit</button>
                 </div>
             </div>
         </form>
@@ -260,4 +244,7 @@
 </body>
 <script src="http://code.jquery.com/jquery.js"></script>
 <script src="./scripts/add-project.js"></script>
+<script>
+
+</script>
 </html>
