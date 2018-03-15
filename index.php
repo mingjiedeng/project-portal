@@ -8,12 +8,11 @@
 //    require_once '/home/mdenggre/db-config.php';
 
 
-//Create an instance of the Base class
+    //Create an instance of the Base class
     $f3 = Base::instance();
 
     //Set devug level
     $f3->set('DEBUG', 3); //3 is higher than 0, will present more info
-
 
     //Define a default route
     $f3->route('GET /', function($f3) {
@@ -38,9 +37,18 @@
         echo Template::instance() -> render('views/pSummary.html');
     });
 
-    $f3->route('GET /addProject', function($f3) {
+    $f3->route('GET|POST /addProject', function($f3) {
+        if(isset($_POST['submit']))
+        {
+            $post = $_POST; //variable used in validation.php
+            include_once "model/validate-onsubmit.php";
+//            $project = new Project();
+//            $project->addNewProject($_POST);
 
-        echo Template::instance() -> render('views/add-project.html');
+        }
+        else if(!isset($_POST['submit'])){
+            echo Template::instance() -> render('views/add-project.html');
+        }
     });
 
     $f3->route('GET /signIn', function($f3) {
