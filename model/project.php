@@ -12,6 +12,7 @@ class Project extends DataObject
     protected $projectsColumns = array(
         'pTitle' => '',
         'description' => '',
+        'note' => '',
         'status' => '',
         'cName' => '',
         'cLocation' => '',
@@ -28,7 +29,6 @@ class Project extends DataObject
         'className' => '',
         'quarter' => '',
         'instructor' => '',
-        'note' => '',
         'url' => '',
         'trello' => '',
         'login' => '',
@@ -119,20 +119,20 @@ class Project extends DataObject
 
         //Insert into classes table
         $inputColumn = array('className', 'quarter', 'instructor');
-        $newData = rearrangeData($inputColumn, $data);
+        $newData = $this->rearrangeData($pid, $inputColumn, $data);
         foreach ($newData as $row) {
             $this->addClass($row);
         }
 
         //Insert into contacts table
         $inputColumn = array('contactName', 'title', 'email', 'phone');
-        $newData = rearrangeData($inputColumn, $data);
+        $newData = $this->rearrangeData($pid, $inputColumn, $data);
         foreach ($newData as $row) {
             $this->addContact($row);
         }
     }
 
-    protected function rearrangeData($inputColumn, $data)
+    protected function rearrangeData($pid, $inputColumn, $data)
     {
         $newData[] = array();
         foreach ($inputColumn as $colName) {
@@ -140,8 +140,8 @@ class Project extends DataObject
                 $newData[$index][$colName] = $val;
             }
         }
-        foreach ($newData as $row) {
-            $row['pid'] = $data['pid'];
+        foreach ($newData as &$row) {
+            $row['pid'] = $pid;
         }
         return $newData;
     }
