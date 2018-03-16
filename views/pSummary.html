@@ -57,13 +57,13 @@
         </div>
         <div style="margin-top: 25px;" class="form-group row">
             <div class="col-md-4">
-                <p class="text-success"><span class="text-muted">Project Link:</span> <a href="{{ @project['url'] }}" target="_blank">{{ @project['url'] }}</a></p>
+                <p class="text-success"><span class="text-muted">Project Link:</span> <a href="<check if="{{ @project[url] }}">//{{ @project[url] }}</check>" target="_blank">{{ @project['url'] }}</a></p>
             </div>
             <div class="col-md-4">
-                <p class="text-success"><span class="text-muted">Torelo Link:</span> <a href="{{ @project['trello'] }}" target="_blank">{{ @project['trello'] }}</a></p>
+                <p class="text-success"><span class="text-muted">Torelo Link:</span> <a href="<check if="{{ @project[trello] }}">//{{ @project[trello] }}</check>" target="_blank">{{ @project['trello'] }}</a></p>
             </div>
             <div class="col-md-4">
-                <p class="text-success"><span class="text-muted">Github Link:</span> <a href="{{ @project['github'] }}" target="_blank">{{ @project['github'] }}</a></p>
+                <p class="text-success"><span class="text-muted">Github Link:</span> <a href="<check if="{{ @project[github] }}">//{{ @project[github] }}</check>" target="_blank">{{ @project['github'] }}</a></p>
             </div>
         </div>
     </div> <!--project info read only-->
@@ -204,7 +204,7 @@
                 <p><span class="text-muted">Location:</span> {{ @project['cLocation'] }}</p>
             </div>
             <div class="col-md-4">
-                <p><span class="text-muted">Site url:</span> <a href="">{{ @project['cSite'] }}</a></p>
+                <p><span class="text-muted">Site url:</span> <a href="<check if="{{ @project[cSite] }}">//{{ @project[cSite] }}</check>">{{ @project['cSite'] }}</a></p>
             </div>
         </div>
     </div> <!--company info read only-->
