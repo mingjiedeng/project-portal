@@ -18,9 +18,9 @@ class Project extends DataObject
         'cSite' => '',
         'url' => '',
         'trello' => '',
+        'github' => '',
         'username' => '',
-        'password' => '',
-        'github' => ''
+        'password' => ''
     );
 
     protected $classesColumns = array(
@@ -74,6 +74,36 @@ class Project extends DataObject
         $statement = $this->select($tblName, $options);
 
         return $statement->fetch(PDO::FETCH_ASSOC);
+    }
+
+
+    /**
+     * @param $pid
+     * @return array
+     */
+    function getClasses($pid)
+    {
+        $tblName = 'classes';
+        $options = array('pid' => $pid);
+
+        $statement = $this->select($tblName, $options);
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    /**
+     * @param $pid
+     * @return array
+     */
+    function getContacts($pid)
+    {
+        $tblName = 'contacts';
+        $options = array('pid' => $pid);
+
+        $statement = $this->select($tblName, $options);
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
 
