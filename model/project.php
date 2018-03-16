@@ -201,4 +201,20 @@ class Project extends DataObject
         $options = array('contact_id' => $contact_id);
         return $this->update($tblName, $columns, $data, $options);
     }
+
+
+    /**
+     * @param $pid
+     * @return bool
+     */
+    function deleteProject($pid)
+    {
+        $tblNames = array('classes', 'contacts', 'projects');
+        $options = array('pid' => $pid);
+
+        foreach ($tblNames as $tblName) {
+            $result = $this->delete($tblName, $options);
+        }
+        return $result;
+    }
 }

@@ -198,4 +198,38 @@ class DataObject {
         //Return the results
         return $result;
     }
+
+    /**
+     * @param $tblName
+     * @param array $options
+     * @return bool
+     */
+    protected function delete($tblName, $options = array())
+    {
+        if(empty($tblName))
+            die("Method " . __METHOD__ . ": parameters error.");
+
+        //Concat the options for select query
+        foreach ($options as $key => $value) {
+            $whereConditions = $key . '=:' . $key . ' AND ';
+        }
+        $whereConditions = empty($whereConditions) ? '' : ' WHERE ' . rtrim($whereConditions, ' AND ');
+
+        //Define the query
+        $sql = "DELETE FROM {$tblName} {$whereConditions}";
+
+        //Prepare the statement
+        $statement = $this->dbh->prepare($sql);
+
+        //Bind parameters
+        foreach ($options as $key => &$value) {
+            $statement->bindParam(':'.$key, $value);
+        }
+
+        //Execute the query
+        $result = $statement->execute();
+
+        //Return the results
+        return $result;
+    }
 }
