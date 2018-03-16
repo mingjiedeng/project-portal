@@ -83,18 +83,43 @@ class Project extends DataObject
     function addNewProject($data)
     {
         //Insert into projects table
-        $this->addProject($data);
+        $pid = $this->addProject($data);
+        $data['pid'] = $pid;
 
         //Insert into classes table
+        $inputColumn = array('className', 'quarter', 'instructor');
+        $newData = rearrangeData($inputColumn, $data);
+        foreach ($newData as $row) {
+            $this->addClass($row);
+        }
 
-        //Insert into contact table
+        //Insert into contacts table
+        $inputColumn = array('contactName', 'title', 'email', 'phone');
+        $newData = rearrangeData($inputColumn, $data);
+        foreach ($newData as $row) {
+            $this->addContact($row);
+        }
+    }
+
+    protected function rearrangeData($inputColumn, $data)
+    {
+        $newData[] = array();
+        foreach ($inputColumn as $colName) {
+            foreach($data[$colName] as $index=>$val) {
+                $newData[$index][$colName] = $val;
+            }
+        }
+        foreach ($newData as $row) {
+            $row['pid'] = $data['pid'];
+        }
+        return $newData;
     }
 
 
     /**
      * Add data into projects table
      * @param $data
-     * @return bool
+     * @return int the project id in the database
      */
     protected function addProject($data)
     {
