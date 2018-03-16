@@ -22,7 +22,8 @@ CREATE TABLE IF NOT EXISTS `projects` (
   `cSite` VARCHAR(200) NULL DEFAULT NULL COMMENT 'company site (url)',
   `url` VARCHAR(200) NULL DEFAULT NULL COMMENT 'site url',
   `trello` VARCHAR(1000) NULL DEFAULT NULL COMMENT 'trello info',
-  `login` VARCHAR(1000) NULL DEFAULT NULL COMMENT 'login credential',
+  `username` VARCHAR(50) NULL DEFAULT NULL COMMENT 'login credential',
+  `password` VARCHAR(100) NULL DEFAULT NULL COMMENT 'login credential',
   `github` VARCHAR(1000) NULL DEFAULT NULL COMMENT 'GitHub info',
   
   PRIMARY KEY (`pid`)

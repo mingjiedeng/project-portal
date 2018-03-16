@@ -18,7 +18,8 @@ class Project extends DataObject
         'cSite' => '',
         'url' => '',
         'trello' => '',
-        'login' => '',
+        'username' => '',
+        'password' => '',
         'github' => ''
     );
 
