@@ -10,7 +10,50 @@
 </head>
 <body>
 
+<div class="container">
+    <table class="table table-bordered" id="usersTable" width="100%" cellspacing="0">
+        <thead>
+        <tr>
+            <th>userName</th>
+            <th>Email Address</th>
+            <th>Privilege</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+            <th>userName</th>
+            <th>Email Address</th>
+            <th>Privilege</th>
+            <th></th>
+        </tr>
+        </tfoot>
+        <tbody>
+        <repeat group="{{ @users }}" value="{{ @user }}">
+        <tr>
+            <th>{{ @user['userName'] }}</th>
+            <td>{{ @user['email'] }}</th>
+            <td><check if="{{ @user['privilege'] == 1 }}">
+                <true>Administrator</true>
+                <false>General User</false></check>
+            </td>
+            <td><button id="edit" class="btn" value="{{ @user['user_id'] }}">Edit</button> </td>
+        </tr>
+        </repeat>
 
+        <tr>
+            <th><input type="text" id="addUserName" value="" placeholder="UserName"></th>
+            <td><input type="text" id="addEmail" value="" placeholder="Email Address"></th>
+            <td><select>
+                <option value="2">General User</option>
+                <option value="1">Administrator</option>
+            </select>
+            </td>
+            <td><button id="addUser" class="btn">Add User</button> </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
