@@ -30,6 +30,46 @@
         .rm-cred:hover{
             cursor: pointer;
         }
+
+        .loader{
+            border: 5px solid white;
+            border-radius: 50%;
+            border-top: 5px solid orange;
+            width: 120px;
+            height: 120px;
+            animation: spin 0.5s linear infinite;
+            margin: auto;
+            text-align: center;
+            margin-top: 250px;
+        }
+        @keyframes spin{
+            0%{transform:rotate(0deg);}
+            100%{transform:rotate(360deg);}
+        }
+
+        #overlay {
+            position: fixed;
+            display: none;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 2;
+            cursor: pointer;
+        }
+
+        #text{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            font-size: 50px;
+            color: white;
+            transform: translate(-50%,-50%);
+            -ms-transform: translate(-50%,-50%);
+        }
     </style>
 </head>
 <body>
@@ -70,27 +110,6 @@
                             <input id="password" type="text" name="password" class="form-control-sm" placeholder="Password:">
                         </div>
                     </div>
-                <!--</form>-->
-
-                <div id="add-contact">
-                    <div class="row form-group">
-                        <div class="col-md-6">
-                            <input type="text" name="contactName1" class="form-control-sm" placeholder="Name:">
-                        </div>
-                        <div class="col-md-6">
-                            <input type="text" name="title1" class="form-control-sm" placeholder="Title:">
-                        </div>
-                    </div>
-
-                    <div class="row form-group">
-                        <div class="col-md-6">
-                            <input type="text" name="phone1" class="form-control-sm" placeholder="Phone:">
-                        </div>
-                        <div class="col-md-6">
-                            <input type="text" name="email1" class="form-control-sm" placeholder="Email:">
-                        </div>
-                    </div>
-                </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -99,6 +118,11 @@
         </div>
     </div>
 </div> <!--Modal end-->
+
+<div id="overlay">
+    <div id="success-msg" class="text-white text-center"><h1 style="font-weight: 200; margin-top: 250px;">Your project has been added successfully</h1></div>
+    <div id="load" class="text-white"></div>
+</div>
 
 <div class="container">
     <div class="new-form">
@@ -109,7 +133,7 @@
                         <legend>Project Information</legend>
                     </div>
                     <div class="col-6">
-                        <img class="float-right cancel" name="cancel" src="./images/error.svg" alt="cancel">
+                        <a href="{{@BASE}}"><img class="float-right cancel" name="cancel" src="./images/error.svg" alt="cancel"></a>
                     </div>
                 </div>
                 <hr style="margin-top: 2px;">
@@ -223,44 +247,51 @@
                 <hr style="margin-top: 2px;">
                 <div class="form-group row">
                     <div class="col-md-6">
-                        <span id="client-name-error" class="text-danger"></span>
-                        <input id="client-name" type="text" name="contactName" placeholder="Name:">
+                        <span id="clientname_1-error" class="text-danger"></span>
+                        <input id="clientname_1" type="text" name="contactName[]" placeholder="Name:">
                     </div>
 
                     <div class="col-md-6">
-                        <span id="client-title-error" class="text-danger"></span>
-                        <input id="client-title" type="text" name="title" placeholder="Title:">
+                        <span id="clienttitle_1-error" class="text-danger"></span>
+                        <input id="clienttitle_1" type="text" name="title[]" placeholder="Title:">
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col-md-6">
-                        <span id="phone-error" class="text-danger"></span>
-                        <input id="phone" type="text" name="phone" placeholder="Phone:">
+                        <span id="phone_1-error" class="text-danger"></span>
+                        <input id="phone_1" type="text" name="phone[]" placeholder="Phone:">
                     </div>
 
                     <div class="col-md-6">
-                        <span id="email-error" class="text-danger"></span>
-                        <input id="email" type="text" name="email" placeholder="Email:">
+                        <span id="email_1-error" class="text-danger"></span>
+                        <input id="email_1" type="text" name="email[]" placeholder="Email:">
                     </div>
                 </div>
 
+                <div id="contact-info"></div> <!--div for adding additional contacts-->
+
                 <div class="row">
-                    <div class="col-md-12">
-                        <span id="added-contact" class="text-muted"></span><span class="text-danger" id="rm-contact"></span>
-                        <a href="" class="link" id="add-conct" data-toggle="modal" data-target="#myModal">Add contact</a>
+                    <div class="col-md-6">
+                        <!--<span id="added-contact" class="text-muted"></span><span class="text-danger" id="rm-contact"></span>-->
+                        <!--<a href="" class="link" id="add-conct" data-toggle="modal" data-target="#myModal">Add contact</a>-->
+                        <button id="add-conct" type="button" class="btn btn-sm btn-outline-success rounded-0">Add Contact</button>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <button id="remove-contact" type="button" style="background-color: transparent; border: 0; outline: none;" class="btn btn-sm rounded-0 text-danger">Remove Contact</button>
                     </div>
                 </div>
             </fieldset> <!--contact info end-->
 
             <div class="form-group row">
                 <div class="col-md-2 offset-md-10">
-                    <button name="submit" id="submit" type="submit" style="border-radius: 25px; font-weight: 300; font-size: 20px; color: white; width: 100%; background-color: #A600FF; " class="btn">Submit</button>
+                    <button name="submit" id="submit" type="submit" style="margin-top: 25px; border-radius: 25px; font-weight: 300; font-size: 20px; color: white; width: 100%; background-color: #A600FF; " class="btn">Submit</button>
                 </div>
             </div>
         </form>
     </div>
 </div>
+
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
