@@ -103,6 +103,9 @@ $(document).ready(function() {
         data.push({name:'submit', value:set}); //set submit
 
         $.post("./addProject", data, function (result) {
+            // alert(result);
+            if(result.includes("submitted"))
+                loading();
             if(result.includes(":")) {
                 var results = jQuery.parseJSON(result); //covert result into json
                 $.each(results, function (index, item) { //loop over and get the values
@@ -135,7 +138,7 @@ $(document).ready(function() {
                 $("#login-error").removeClass('text-danger');
                 $("#login-error").addClass('text-success');
 
-                if(part[1].substring(0, 4) == 'User') {
+                // if(part[1].substring(0, 4) == 'User') {
                     $("#username").hide(); $("#password").hide(); $("#add-btn").hide();
                     $("#login-error").html("Login credentials has been added");
 
@@ -144,9 +147,7 @@ $(document).ready(function() {
 
                     $("#rm-cred").html("x");
                     $("#add-cred").hide(150);
-                } else {
-                    $("#login-error").html("Contact has been added");
-                }
+                // }
             }
         });
     });
@@ -171,4 +172,82 @@ $(document).ready(function() {
             $("#add-cred").show(150);
         });
     });
+
+    //following two function for adding and removing the contact info
+    //field with btn clicks
+    $("#remove-contact").hide(); //hide remove button initially
+    var contact_id = 0; //id of each contact info block
+    var field_id = 1; //input field id
+
+    //add contact fields with button click
+    $("#add-conct").click(function(){
+        $("#remove-contact").show(300); //show remove btn after adding one field
+
+        if(contact_id < 4) { //limit of adding
+            contact_id++;
+            field_id++;
+            $("#contact-info").append("<div id='contact" + contact_id + "'>\n" +
+                "    <hr style='margin-top: 2px;'>\n" +
+                "    <div class='form-group row'>\n" +
+                "        <div class='col-md-6'>\n" +
+                "            <span id='clientname_"+ field_id +"-error' class='text-danger'></span>\n" +
+                "            <input id='clientname_"+ field_id +"' type='text' name='contactName[]' placeholder='Name:'>\n" +
+                "        </div>\n" +
+                "\n" +
+                "        <div class='col-md-6'>\n" +
+                "            <span id='clienttitle_"+ field_id +"-error' class='text-danger'></span>\n" +
+                "            <input id='clienttitle_2' type='text' name='title[]' placeholder='Title:'>\n" +
+                "        </div>\n" +
+                "    </div>\n" +
+                "\n" +
+                "    <div class='form-group row'>\n" +
+                "        <div class='col-md-6'>\n" +
+                "            <span id='phone_"+ field_id +"-error' class=\"text-danger\"></span>\n" +
+                "            <input id='phone_"+ field_id +"' type='text' name='phone[]' placeholder='Phone:'>\n" +
+                "        </div>\n" +
+                "\n" +
+                "        <div class='col-md-6'>\n" +
+                "            <span id='email_"+ field_id +"-error' class='text-danger'></span>\n" +
+                "            <input id='email_"+ field_id +"' type='text' name='email[]' placeholder='Email:'>\n" +
+                "        </div>\n" +
+                "    </div>\n" +
+                "</div>");
+            $('#contact'+contact_id).hide();
+        }
+        $('#contact'+contact_id).show(300);
+    });
+
+    //remove the contact fields by clicking on remove btn
+    $("#remove-contact").click(function(){
+        $('#contact'+contact_id).remove(); //start removing from last
+        if(contact_id > 0) { //stop removing at zero
+            contact_id--;
+            field_id--;
+        }
+        if(contact_id == 0)
+            $("#remove-contact").fadeOut("slow");
+    });
+
+    //show warning before user leave the form
+    // $(window).on("beforeunload", function() {
+    //     return "Are you sure? You didn't finish the form!";
+    // });
+
+    //this function runs after when user successfully submitted the form
+    //it displays some loading spins and success msg by clicking on submit
+    function loading() {
+        //     $("#success-msg").hide();
+        //     document.getElementById("overlay").style.display = "block";
+        //     $("#load").addClass("loader");
+        //
+        //     setTimeout(function(){
+        //         $("#load").removeClass("loader");
+        //         $("#success-msg").fadeIn(150);
+        //     }, 800);
+        //
+        //     setTimeout(function(){
+        //         document.getElementById("overlay").style.display = "none";
+        //         window.location.href = 'http://gsingh.greenriverdev.com/328/project-portal/';
+        //     }, 2500);
+    };
 });
