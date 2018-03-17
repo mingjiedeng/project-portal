@@ -10,63 +10,63 @@ if(isset($post))
 
     //push errors into the array based on the input error
     if(!validString($post['pTitle'])) {
-        array_push($errors, "title:Title is not valid");
+        array_push($errors, "title:Missing title");
     }
     if(empty($post['description'])){
         array_push($errors, "description:Missing description field");
     }
     if(!validLink($post['url'])) {
-        array_push($errors, "project-link:Project link is not valid");
+        array_push($errors, "project-link:Missing project link");
     }
     if(!validLink($post['trello'])) {
-        array_push($errors, "torelo-link:Trello link is not valid");
+        array_push($errors, "torelo-link:Missing trello link");
     }
     if(!empty($post['github']) && !validLink($post['github'])) {
-        array_push($errors, "github-link:Github link is not valid");
+        array_push($errors, "github-link:Missing github link");
     }
     if(!validString($post['cName'])) {
-        array_push($errors, "company:Company name is not valid");
+        array_push($errors, "company:Missing company name");
     }
     if(!validString($post['cLocation'])) {
-        array_push($errors, "location:location is not valid");
+        array_push($errors, "location:Missing location field");
     }
     if(!validLink($post['cSite'])) {
-        array_push($errors, "site-url:Site url is not valid");
+        array_push($errors, "site-url:Missing site url");
     }
-//    if(!validString($post['contactName'])) {
-//        array_push($errors, "client-name:Client name is not valid");
-//    }
-//    if(!validString($post['title'])) {
-//        array_push($errors, "client-title:Title is not valid");
-//    }
-//    if(!ctype_digit($post['phone']) || strlen($post['phone']) < 9 || strlen($post['phone']) > 10) {
-//        array_push($errors, "phone:Invalid Phone");
-//    }
-//    if(!validEmail($post['email'])) {
-//        array_push($errors, "email:Invalid email");
-//    }
     if($post['status'] == 'none') {
         array_push($errors, "status:Please select the project status");
     }
 
-    //validate class fields
-    $classes = array_merge($post['className'], $post['quarter'], $post['instructor']);
-    $classErr = false;
-    foreach ($classes as $class) {
-        if(empty($class)) {
-            array_push($errors, 'classname_0:Missing class fields');
-            $classErr = true;
-        }
+    //validate class information
+    $classIndex = 1; $quarterIndex = 1; $instructorIndex = 1;
+    while($classIndex < sizeof($post['className']) + 1) {
+        if(empty($post['className'][$classIndex - 1]))
+            array_push($errors, 'classname_'. $classIndex .':Missing class name');
+        if(empty($post['quarter'][$quarterIndex - 1]))
+            array_push($errors, 'quarter_'. $quarterIndex .':Missing quarter');
+        if(empty($post['instructor'][$instructorIndex - 1]))
+            array_push($errors, 'instructor_'. $instructorIndex .':Missing instructor');
+
+        $classIndex++; $quarterIndex++; $instructorIndex++;
     }
-    if(!$classErr) //set class fields 'no error' message
-        array_push($errors, 'classname_0:');
+
+    //validate contact information
+    $cNameIndex = 1; $cTitleIndex = 1; $cPhone = 1; $cEmail = 1;
+    while($cNameIndex < sizeof($post['contactName']) + 1) {
+        if(empty($post['contactName'][$cNameIndex - 1]))
+            array_push($errors, 'clientname_'. $cNameIndex .':Missing client name');
+        if(empty($post['title'][$cTitleIndex - 1]))
+            array_push($errors, 'clienttitle_'. $cTitleIndex .':Missing client title');
+        if(empty($post['phone'][$cPhone - 1]))
+            array_push($errors, 'phone_'. $cPhone .':Missing phone');
+        if(empty($post['email'][$cEmail - 1]))
+            array_push($errors, 'email_'. $cEmail .':Missing email');
+
+        $cNameIndex++; $cTitleIndex++; $cPhone++; $cEmail++;
+    }
 
     echo json_encode($errors); //send errors data to ajax request in json form
 
-    if(!$classErr) { //unset class field 'no error' message after sending data
-        $index = array_search("classname_0:", $errors);
-        unset($errors[$index]);
-    }
 
     //make sure we have no errors
     $success = sizeof($errors) == 0;

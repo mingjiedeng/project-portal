@@ -4,8 +4,8 @@
 
     //Require the autoload file
     require_once('vendor/autoload.php');
-//    require_once '/home/gsinghgr/config.php';
-    require_once '/home/mdenggre/db-config.php';
+    require_once '/home/gsinghgr/config.php';
+//    require_once '/home/mdenggre/db-config.php';
 
 
     //Create an instance of the Base class
