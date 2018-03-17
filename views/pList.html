@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="{{@BASE}}/styles/style.css">
     <title>Project Portal</title>
 
     <style>
@@ -18,20 +18,20 @@
 <body>
 <nav class="navbar navbar-inverse navbar-toggleable" style="background-color: #1C2833;">
     <div id="icon-bar" class="navbar-nav row">
-        <a style="margin-left: 0; padding-left: 0;" class="navbar-brand" href="{{@BASE}}"><img style="width: 50px;" src="./images/code.svg"> <span id="brand-head">Project Portal</span></a>
+        <a style="margin-left: 0; padding-left: 0;" class="navbar-brand" href="{{@BASE}}"><img style="width: 50px;" src="{{@BASE}}/images/code.svg"> <span id="brand-head">Project Portal</span></a>
     </div>
 
     <div class="navbar-nav search-width">
-        <input type="text" id="search" placeholder="Search"><span><img id="search-icon" src="./images/search.svg"></span>
+        <input type="text" id="search" placeholder="Search"><span><img id="search-icon" src="{{@BASE}}/images/search.svg"></span>
     </div>
 
     <div class="" id="myContent">
         <div class="navbar-nav ml-auto">
             <check if="{{isset(@login)}}">
-                <a class="nav-item nav-link active thin" href="./addProject"><img id="add-icon" src="./images/add.svg"> <span>Add new project</span></a>
+                <a class="nav-item nav-link active thin" href="{{@BASE}}/addProject"><img id="add-icon" src="{{@BASE}}/images/add.svg"> <span>Add new project</span></a>
             </check>
             <check if="{{!isset(@login)}}">
-                <a class="nav-item nav-link active thin" href="./signIn"><span>Sign In</span></a>
+                <a class="nav-item nav-link active thin" href="{{@BASE}}/signIn"><span>Sign In</span></a>
             </check>
         </div>
     </div>
@@ -39,32 +39,32 @@
 
 <div style="padding: 20px;" class="container">
     <repeat group="{{ @projects }}" value="{{ @project }}">
-    <div class="list">
-        <div class="row">
-            <div class="col">
-                <p class="h3">{{ @project[pTitle] }}</p>
-                <hr>
-                <p>
-                    {{ @project[description] }}
-                </p>
+        <div class="list">
+            <div class="row">
+                <div class="col">
+                    <p class="h3">{{ @project[pTitle] }}</p>
+                    <hr>
+                    <p>
+                        {{ @project[description] }}
+                    </p>
 
-                <div class="row">
-                    <div class="col-6">
-                        <a href="{{ @project[github] }}">Github,</a>
-                        <a href="{{ @project[trello] }}">Torello,</a>
-                        <a href="{{ @project[url] }}">Project Url</a>
-                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <a href="<check if="{{ @project[github] }}">//{{ @project[github] }}</check>" target="_blank">Github,</a>
+                            <a href="<check if="{{ @project[trello] }}">//{{ @project[trello] }}</check>" target="_blank">Torello,</a>
+                            <a href="<check if="{{ @project[url] }}">//{{ @project[url] }}</check>" target="_blank">Project Url</a>
+                        </div>
 
-                    <div class="col-6 text-right">
-                        <!-- change this line to add the link on the button --Mingjie
-                        <button class="btn btn-outline-primary rounded-0">View</button>-->
-                        <a class="btn btn-outline-primary rounded-0" href="project/{{ @project['pid'] }}" role="button">View</a>
-                        <!--<a class="float-right" href="">View</a>-->
+                        <div class="col-6 text-right">
+                            <!-- change this line to add the link on the button --Mingjie
+                            <button class="btn btn-outline-primary rounded-0">View</button>-->
+                            <a class="btn btn-outline-primary rounded-0" href="project/{{ @project['pid'] }}" role="button">View</a>
+                            <!--<a class="float-right" href="">View</a>-->
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </repeat>
 </div>
 
@@ -79,35 +79,29 @@
         //hide search bar
         $("#search").hide();
         $(".list").hide();
-
         //fade in content
         $(".list").each(function (index) {
             $(this).delay(120*index).fadeIn(500);
         });
-
         $(window).resize(function() {
             console.log($(window).width());
         });
-
         //add red border to the bottom of search bar
         $("#search").focus(function(){
             $("#search-icon").addClass("red-border");
         });
-
         //remove class when user click in blank space
         $("body").click(function(){
             $("#search").removeClass("red-border");
             $("#search-icon").removeClass("red-border");
         });
-
         //show search bar
         $("#search-icon").click(function(){
             $("#search").show(400);
         });
-
         //add and remove class from btn
         $(".list").mouseover(function(){
-           $(this).find(".btn").removeClass("btn-outline-primary");
+            $(this).find(".btn").removeClass("btn-outline-primary");
             $(this).find(".btn").addClass("btn-primary");
         });
         $(".list").mouseout(function(){

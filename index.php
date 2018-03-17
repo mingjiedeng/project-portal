@@ -4,8 +4,8 @@
 
     //Require the autoload file
     require_once('vendor/autoload.php');
-    require_once '/home/gsinghgr/config.php';
-//    require_once '/home/mdenggre/db-config.php';
+//    require_once '/home/gsinghgr/config.php';
+    require_once '/home/mdenggre/db-config.php';
 
 
     //Create an instance of the Base class
@@ -18,9 +18,6 @@
     $f3->route('GET /', function($f3) {
         $f3->set('login', 'yes');
 
-//        $data = array('pTitle' => 'Project D',
-//                    'description' => 'test again',
-//                    'cName' => 'Company D');
         $project = new Project();
         $projects = $project->getProjects();
         $f3->set('projects', $projects);
@@ -29,11 +26,14 @@
     });
 
     $f3->route('GET /project/@pid', function($f3, $params) {
-//    $f3->route('GET|POST /project', function($f3, $params) { //removed params temporary
         $project = new Project();
         $projects = $project->getProject($params['pid']);
+        $classes = $project->getClasses($params['pid']);
+        $contacts = $project->getContacts($params['pid']);
         $f3->set("project", $projects);
-//        $f3->set('login', 'set');
+        $f3->set("classes", $classes);
+        $f3->set("contacts", $contacts);
+//        $f3->set('login', '$contactsset');
 //        $f3->set('edit', 'set');
         echo Template::instance() -> render('views/pSummary.html');
     });
@@ -43,7 +43,6 @@
         {
             $post = $_POST; //variable used in validation.php
             include_once "model/validate-onsubmit.php";
-
             //insert data into database if there is no error
             if($success) {
                 $project = new Project();

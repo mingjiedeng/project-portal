@@ -12,14 +12,16 @@ class Project extends DataObject
     protected $projectsColumns = array(
         'pTitle' => '',
         'description' => '',
+        'note' => '',
         'status' => '',
         'cName' => '',
         'cLocation' => '',
         'cSite' => '',
         'url' => '',
         'trello' => '',
-        'login' => '',
-        'github' => ''
+        'github' => '',
+        'username' => '',
+        'password' => ''
     );
 
     protected $classesColumns = array(
@@ -27,7 +29,6 @@ class Project extends DataObject
         'className' => '',
         'quarter' => '',
         'instructor' => '',
-        'note' => '',
         'url' => '',
         'trello' => '',
         'login' => '',
@@ -77,24 +78,79 @@ class Project extends DataObject
 
 
     /**
+     * @param $pid
+     * @return array
+     */
+    function getClasses($pid)
+    {
+        $tblName = 'classes';
+        $options = array('pid' => $pid);
+
+        $statement = $this->select($tblName, $options);
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    /**
+     * @param $pid
+     * @return array
+     */
+    function getContacts($pid)
+    {
+        $tblName = 'contacts';
+        $options = array('pid' => $pid);
+
+        $statement = $this->select($tblName, $options);
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    /**
      * Add a new project info include classes and contacts info
      * @param $data
      */
     function addNewProject($data)
     {
         //Insert into projects table
-        $this->addProject($data);
+        $pid = $this->addProject($data);
+        $data['pid'] = $pid;
 
         //Insert into classes table
+        $inputColumn = array('className', 'quarter', 'instructor');
+        $newData = $this->rearrangeData($pid, $inputColumn, $data);
+        foreach ($newData as $row) {
+            $this->addClass($row);
+        }
 
-        //Insert into contact table
+        //Insert into contacts table
+        $inputColumn = array('contactName', 'title', 'email', 'phone');
+        $newData = $this->rearrangeData($pid, $inputColumn, $data);
+        foreach ($newData as $row) {
+            $this->addContact($row);
+        }
+    }
+
+    protected function rearrangeData($pid, $inputColumn, $data)
+    {
+        $newData[] = array();
+        foreach ($inputColumn as $colName) {
+            foreach($data[$colName] as $index=>$val) {
+                $newData[$index][$colName] = $val;
+            }
+        }
+        foreach ($newData as &$row) {
+            $row['pid'] = $pid;
+        }
+        return $newData;
     }
 
 
     /**
      * Add data into projects table
      * @param $data
-     * @return bool
+     * @return int the project id in the database
      */
     protected function addProject($data)
     {
@@ -175,5 +231,21 @@ class Project extends DataObject
         $columns = $this->contactsColumns;
         $options = array('contact_id' => $contact_id);
         return $this->update($tblName, $columns, $data, $options);
+    }
+
+
+    /**
+     * @param $pid
+     * @return bool
+     */
+    function deleteProject($pid)
+    {
+        $tblNames = array('classes', 'contacts', 'projects');
+        $options = array('pid' => $pid);
+
+        foreach ($tblNames as $tblName) {
+            $result = $this->delete($tblName, $options);
+        }
+        return $result;
     }
 }
