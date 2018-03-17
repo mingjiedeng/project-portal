@@ -49,15 +49,25 @@ if(isset($post))
         array_push($errors, "status:Please select the project status");
     }
 
+    //validate class fields
     $classes = array_merge($post['className'], $post['quarter'], $post['instructor']);
-
+    $classErr = false;
     foreach ($classes as $class) {
         if(empty($class)) {
             array_push($errors, 'classname_0:Missing class fields');
-        } else
-            array_push($errors, 'classname_0:');
+            $classErr = true;
+        }
+    }
+    if(!$classErr) //set class fields 'no error' message
+        array_push($errors, 'classname_0:');
+
+    echo json_encode($errors); //send errors data to ajax request in json form
+
+    if(!$classErr) { //unset class field 'no error' message after sending data
+        $index = array_search("classname_0:", $errors);
+        unset($errors[$index]);
     }
 
-    $success = sizeof($errors) == 0; //make sure we have no errors
-    echo json_encode($errors); //send errors data to ajax request in json form
+    //make sure we have no errors
+    $success = sizeof($errors) == 0;
 }
