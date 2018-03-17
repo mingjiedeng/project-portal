@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `contacts` (
 
 CREATE TABLE IF NOT EXISTS `users` (
   `user_id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `privilege` TINYINT UNSIGNED NOT NULL,
+  `privilege` TINYINT UNSIGNED NOT NULL COMMENT '1=Administrator; 2=GeneralUser',
   `userName` varchar(30) NOT NULL,
   `password` char(64) NOT NULL,
   `email` varchar(50) DEFAULT NULL,

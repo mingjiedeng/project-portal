@@ -43,6 +43,14 @@ class Project extends DataObject
         'phone' => ''
     );
 
+    protected $usersColumns = array(
+        'user_id' => '',
+        'privilege' => '',
+        'userName' => '',
+        'password' => '',
+        'email' => ''
+    );
+
 
     /**
      * Get a project list from database
@@ -247,5 +255,61 @@ class Project extends DataObject
             $result = $this->delete($tblName, $options);
         }
         return $result;
+    }
+
+
+    /**
+     * @return array
+     */
+    function getUsers()
+    {
+        $tblName = 'users';
+        $options = array();
+        $orderBy = 'user_id';
+        $order = 'ASC';
+
+        $statement = $this->select($tblName, $options, $orderBy, $order);
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    /**
+     * @param $data
+     * @return bool|int
+     */
+    protected function addUser($data)
+    {
+        $tblName = 'users';
+        $columns = $this->usersColumns;
+
+        return $this->insert($tblName, $columns, $data);
+    }
+
+
+    /**
+     * @param $data
+     * @param $contact_id
+     * @return bool
+     */
+    function updateUser($data, $user_id)
+    {
+        $tblName = 'users';
+        $columns = $this->contactsColumns;
+        $options = array('user_id' => $user_id);
+        return $this->update($tblName, $columns, $data, $options);
+    }
+
+
+    /**
+     * @param $pid
+     * @return bool
+     */
+    function deleteUser($user_id)
+    {
+        $tblName = 'users';
+        $options = array('user_id' => $user_id);
+
+        return $this->delete($tblName, $options);
     }
 }

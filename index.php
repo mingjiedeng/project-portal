@@ -4,14 +4,14 @@
 
     //Require the autoload file
     require_once('vendor/autoload.php');
-    require_once '/home/gsinghgr/config.php';
-//    require_once '/home/mdenggre/db-config.php';
+//    require_once '/home/gsinghgr/config.php';
+    require_once '/home/mdenggre/db-config.php';
 
 
     //Create an instance of the Base class
     $f3 = Base::instance();
 
-    //Set devug level
+    //Set debug level
     $f3->set('DEBUG', 3); //3 is higher than 0, will present more info
 
     //Define a default route
@@ -66,8 +66,14 @@
     });
 
     $f3->route('GET /admin', function($f3) {
-        echo "<p>This page show the account list. </p>
-              <p>Administrator can add new faculty account here directly by Ajax.</p>";
+//        if (!isset($_SESSION['userName']) || $_SESSION['privilege'] != 1) {
+//            $f3->reroute('/');
+//        }
+
+        $pObject = new Project();
+        $users = $pObject->getUsers();
+        $f3->set('users', $users);
+
         echo Template::instance() -> render('views/admin.html');
     });
 
