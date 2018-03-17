@@ -11,24 +11,28 @@ $(document).ready(function() {
     });
 
     //change modal fields on click
-    $("#add-url").click(function(){
-        $("#exampleModalLabel").html("Add Url");
-        $("#url").show();
-        $("#add-login").hide();
-        $("#add-contact").hide();
-    });
+    // $("#add-url").click(function(){
+    //     $("#exampleModalLabel").html("Add Url");
+    //     $("#url").show();
+    //     $("#add-login").hide();
+    //     $("#add-contact").hide();
+    // });
 
     $("#add-cred").click(function(){
+        $("#login-error").html('');
+        $("#add-btn").show();
         $("#exampleModalLabel").html("Add Credentials");
         $("#add-login").show();
-        $("#url").hide();
+        // $("#url").hide();
         $("#add-contact").hide();
     });
 
     $("#add-conct").click(function(){
+        $("#login-error").html('');
+        $("#add-btn").show();
         $("#exampleModalLabel").html("Add Contact");
         $("#add-contact").show();
-        $("#url").hide();
+        // $("#url").hide();
         $("#add-login").hide();
     });
 
