@@ -39,6 +39,15 @@
     });
 
     $f3->route('GET|POST /addProject', function($f3) {
+//        $years = array();
+//        $currentYear = date("Y");
+//        $year = 2015;
+//        while($year <= $currentYear) {
+//            array_push($years, $year);
+//            $year++;
+//        }
+//        $f3->set("years",$years);
+
         if(isset($_POST['submit']))
         {
             $post = $_POST; //variable used in validation.php
@@ -53,6 +62,7 @@
                 //add into database
                 $project = new Project();
                 $project->addNewProject($_POST);
+                echo "submitted";
             }
         }
         else if(!isset($_POST['submit'])){
