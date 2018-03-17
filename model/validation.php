@@ -3,7 +3,7 @@
 $input = $_POST[input];
 $name = $_POST[name];
 
-//validate alpha and numeric field
+//validate alphanumeric field
 function validString($str)
 {
     return ctype_alnum(str_replace(' ', '', $str));

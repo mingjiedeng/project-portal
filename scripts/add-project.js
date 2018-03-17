@@ -10,25 +10,21 @@ $(document).ready(function() {
         $(this).delay(30*index).fadeIn(800);
     });
 
-    //change modal fields on click
-    $("#add-url").click(function(){
-        $("#exampleModalLabel").html("Add Url");
-        $("#url").show();
-        $("#add-login").hide();
-        $("#add-contact").hide();
-    });
-
     $("#add-cred").click(function(){
+        $("#login-error").html('');
+        $("#add-btn").show();
         $("#exampleModalLabel").html("Add Credentials");
         $("#add-login").show();
-        $("#url").hide();
+        // $("#url").hide();
         $("#add-contact").hide();
     });
 
     $("#add-conct").click(function(){
+        $("#login-error").html('');
+        $("#add-btn").show();
         $("#exampleModalLabel").html("Add Contact");
         $("#add-contact").show();
-        $("#url").hide();
+        // $("#url").hide();
         $("#add-login").hide();
     });
 
@@ -114,6 +110,65 @@ $(document).ready(function() {
                     $("#" + input_name[0] + "-error").html(input_name[1]); //show errors
                 });
             }
+        });
+    });
+
+    //add login credentials
+    $('#add-btn').click(function () {
+        var set = 'submit';
+        var btn = 'addCred';
+        //change btn name base on which field is visible
+        if($("#add-login").is(":hidden"))
+            btn = "addContact";
+
+        //serialize form data
+        var data = $('#login-form').serializeArray();
+        data.push({name:btn, value:set}); //push submit flag
+
+        //send data using post method
+        $.post("model/validate-hiddenfields.php", data, function (result) {
+            // show error is not success
+            if(!result.includes("-")) {
+                $("#login-error").html(result);
+            } else { //other wise hide the fields and show success message
+                var part = result.split("-");
+                $("#login-error").removeClass('text-danger');
+                $("#login-error").addClass('text-success');
+
+                if(part[1].substring(0, 4) == 'User') {
+                    $("#username").hide(); $("#password").hide(); $("#add-btn").hide();
+                    $("#login-error").html("Login credentials has been added");
+
+                    $("#added-cred").html(part[1]);
+                    $("#added-cred, #rm-cred").addClass("add-rm-cred"); $("#rm-cred").addClass("rm-cred");
+
+                    $("#rm-cred").html("x");
+                    $("#add-cred").hide(150);
+                } else {
+                    $("#login-error").html("Contact has been added");
+                }
+            }
+        });
+    });
+
+    //remove login credentials
+    $("#rm-cred").click(function(){
+        var login = 'login';
+        $("#username").val(''); $("#password").val('');
+
+        //serialize form data
+        var data = $('#login-form').serializeArray();
+        data.push({name:'remove', value:'login'}); //push submit flag
+
+        $.post("model/validate-hiddenfields.php", data, function (result) {
+            $("#username").show(); $("#password").show(); $("#add-btn").show();
+            $("#login-error").addClass('text-danger');
+
+            $("#added-cred").html("");
+            $("#added-cred, #rm-cred").removeClass("add-rm-cred"); $("#rm-cred").removeClass("rm-cred");
+
+            $("#rm-cred").html("");
+            $("#add-cred").show(150);
         });
     });
 });
