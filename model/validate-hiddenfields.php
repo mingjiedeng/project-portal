@@ -3,9 +3,7 @@
 include_once "model/validation.php";
 
 $post = $_POST; //get post array
-//store user name and password
-$userName = "";
-$password = "";
+
 //arrays for holding contacts info
 $contactName = array();
 $title = array();
@@ -18,15 +16,13 @@ if(isset($post['addCred']))
     if(empty($post['username']) || empty($post['password'])) {
         echo "Incorrect username or password";
     } else {
-        //combine username and password for adding into the database
-        $userName = $post['username'];
-        $password = $post['password'];
         echo 'success-Username: '.$post['username'].' Password: '.$post['password'];
     }
-} else if(isset($post[remove])) { //remove login info
+}
+else if(isset($post['remove'])) { //remove login info
     //unset variables
-    $userName = "";
-    $password = "";
+    unset($post['username']);
+    unset($post['password']);
 }
 
 //validate contacts information
@@ -43,3 +39,7 @@ if(isset($post['addContact']))
         array_push($email, $post['email1']);
     }
 }
+
+//set username and password
+$userName = $post['username'];
+$password = $post['password'];
