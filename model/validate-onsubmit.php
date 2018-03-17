@@ -12,8 +12,8 @@ if(isset($post))
     if(!validString($post['pTitle'])) {
         array_push($errors, "title:Title is not valid");
     }
-    if(!validString($post['description'])){
-        array_push($errors, "description:Description is not valid");
+    if(empty($post['description'])){
+        array_push($errors, "description:Missing description field");
     }
     if(!validLink($post['url'])) {
         array_push($errors, "project-link:Project link is not valid");
@@ -33,18 +33,18 @@ if(isset($post))
     if(!validLink($post['cSite'])) {
         array_push($errors, "site-url:Site url is not valid");
     }
-    if(!validString($post['contactName'])) {
-        array_push($errors, "client-name:Client name is not valid");
-    }
-    if(!validString($post['title'])) {
-        array_push($errors, "client-title:Title is not valid");
-    }
-    if(!ctype_digit($post['phone']) || strlen($post['phone']) < 9 || strlen($post['phone']) > 10) {
-        array_push($errors, "phone:Invalid Phone");
-    }
-    if(!validEmail($post['email'])) {
-        array_push($errors, "email:Invalid email");
-    }
+//    if(!validString($post['contactName'])) {
+//        array_push($errors, "client-name:Client name is not valid");
+//    }
+//    if(!validString($post['title'])) {
+//        array_push($errors, "client-title:Title is not valid");
+//    }
+//    if(!ctype_digit($post['phone']) || strlen($post['phone']) < 9 || strlen($post['phone']) > 10) {
+//        array_push($errors, "phone:Invalid Phone");
+//    }
+//    if(!validEmail($post['email'])) {
+//        array_push($errors, "email:Invalid email");
+//    }
     if($post['status'] == 'none') {
         array_push($errors, "status:Please select the project status");
     }

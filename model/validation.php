@@ -57,38 +57,30 @@ if($name == 'status') {
 }
 
 //validate titles, names, and description
-if($name == 'title' || $name == 'description' || $name == 'company'
-    || $name == 'client-title' || $name == 'client-name') {
+if($name == 'title' || $name == 'company') {
     validateAlphaNum($name, $input);
 }
-else if($name == 'note') { //validate project note
-    if(!empty($input) && !validString($input))
-        echo "Invalid data type";
+
+//validate description
+if($name == 'description' && empty($input)) {
+    echo "Missing description";
 }
+
 //validate all url links on the form
-else if($name == 'project-link' || $name == 'github-link' ||
-        $name == 'torelo-link' || $name == 'site-url') {
+else if($name == 'project-link' || $name == 'torelo-link'
+        || $name == 'site-url') {
         if(empty($input))
             echo "Missing $name";
         else if(!validLink($input))
             echo "Invalid $name";
 }
-else if($name == 'location' && empty($input)) {
-    echo "Missing location";
+else if($name == 'github-link') { //validate git hub link
+    if(!empty($input) && !validLink($input))
+        echo "Invalid github link";
 }
 
-//validate email and phone
-if($name == 'email') {
-    if(empty($input))
-        echo "Missing $name";
-    else if(!validEmail($input))
-        echo "$name is not valid";
-}
-else if($name == 'phone') {
-    if(empty($input))
-        echo "Missing $name";
-    else if(!ctype_digit($input) || strlen($input) < 9 || strlen($input) > 10)
-        echo "Invalid $name";
+else if($name == 'location' && empty($input)) {
+    echo "Missing location";
 }
 
 //validate class information
@@ -96,3 +88,26 @@ $temp = explode("_", $name);
 if($temp[0] == 'classname' || $temp[0] == 'quarter' || $temp[0] == 'instructor') {
     validateClassInfo($temp[0], $input);
 }
+
+//validate contact info
+if($temp[0] == 'clientname' || $temp[0] == 'clienttitle') {
+    if(empty($input))
+        echo "Missing ".substr($temp[0], 0,6).' '.substr($temp[0], 6,10);
+    else if(!validString($input))
+        echo "Invalid ".substr($temp[0], 0,6).' '.substr($temp[0], 6,10);
+}
+
+//validate email and phone
+if($temp[0] == 'email') {
+    if(empty($input))
+        echo "Missing $temp[0]";
+    else if(!validEmail($input))
+        echo "$temp[0] is not valid";
+}
+else if($temp[0] == 'phone') {
+    if(empty($input))
+        echo "Missing $temp[0]";
+    else if(!ctype_digit($input) || strlen($input) < 9 || strlen($input) > 10)
+        echo "Invalid $temp[0]";
+}
+

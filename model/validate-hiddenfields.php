@@ -2,44 +2,23 @@
 //include validation functions
 include_once "model/validation.php";
 
-$post = $_POST; //get post array
-
-//arrays for holding contacts info
-$contactName = array();
-$title = array();
-$phone = array();
-$email = array();
+$postArray = $_POST; //get post array
 
 //validate credentials after user hit add button
-if(isset($post['addCred']))
+if(isset($postArray['addCred']))
 {
-    if(empty($post['username']) || empty($post['password'])) {
+    if(empty($postArray['username']) || empty($postArray['password'])) {
         echo "Incorrect username or password";
     } else {
-        echo 'success-Username: '.$post['username'].' Password: '.$post['password'];
+        echo 'success-Username: '.$postArray['username'].' Password: '.$postArray['password'];
     }
 }
-else if(isset($post['remove'])) { //remove login info
+else if(isset($postArray['remove'])) { //remove login info
     //unset variables
-    unset($post['username']);
-    unset($post['password']);
-}
-
-//validate contacts information
-if(isset($post['addContact']))
-{
-    if(!ctype_alpha($post['contactName1']) || !ctype_alpha($post['title1']) ||
-        !ctype_digit($post['phone1']) || !validEmail($post['email1'])) {
-        echo "Incorrect contact information";
-    } else {
-        echo 'success-Name: '.$post['contactName'].' | Title: '.$post['title'];
-        array_push($contactName, $post['contactName1']);
-        array_push($title, $post['title1']);
-        array_push($phone, $post['phone1']);
-        array_push($email, $post['email1']);
-    }
+    unset($postArray['username']);
+    unset($postArray['password']);
 }
 
 //set username and password
-$userName = $post['username'];
-$password = $post['password'];
+$userName = $postArray['username'];
+$password = $postArray['password'];
