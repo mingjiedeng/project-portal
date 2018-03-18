@@ -5,8 +5,8 @@
 
     //Require the autoload file
     require_once('vendor/autoload.php');
-    require_once '/home/gsinghgr/config.php';
-//    require_once '/home/mdenggre/db-config.php';
+//    require_once '/home/gsinghgr/config.php';
+    require_once '/home/mdenggre/db-config.php';
 
 
     //Create an instance of the Base class
@@ -20,7 +20,8 @@
         $f3->set('login', 'yes');
 
         $project = new Project();
-        $projects = $project->getProjects();
+        //$projects = $project->getProjects();
+        $projects = $project->getProjectByKeyword("project b");
         $f3->set('projects', $projects);
 
         echo Template::instance() -> render('views/pList.html');

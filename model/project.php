@@ -70,6 +70,33 @@ class Project extends DataObject
 
 
     /**
+     * @return array
+     */
+    function getProjectByKeyword($keyword = "")
+    {
+        $tblName = 'projects';
+        $options = array(
+            'pTitle' => $keyword,
+            'description' => $keyword,
+            'note' => $keyword,
+            'cName' => $keyword,
+            'cLocation' => $keyword,
+            'cSite' => $keyword,
+            'url' => $keyword,
+            'trello' => $keyword,
+            'github' => $keyword,
+            'username' => $keyword
+            );
+        $orderBy = 'pid';
+        $order = 'DESC';
+
+        $statement = $this->selectLike($tblName, $options, $orderBy, $order);
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    /**
      * Get the project info from database where pid = $pid
      * @param $pid
      * @return mixed
