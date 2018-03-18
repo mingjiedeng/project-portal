@@ -80,8 +80,9 @@ class DataObject {
             die("Method " . __METHOD__ . ": parameters error.");
 
         //Concat the options for select query
+        $whereConditions = "";
         foreach ($options as $key => $value) {
-            $whereConditions = $key . '=:' . $key . ' AND ';
+            $whereConditions .= $key . '=:' . $key . ' AND ';
         }
         $whereConditions = empty($whereConditions) ? '' : ' WHERE ' . rtrim($whereConditions, ' AND ');
         $orderOption = empty($orderBy) ? '' : "ORDER BY {$orderBy} {$order}";
@@ -103,6 +104,47 @@ class DataObject {
         //Return the statement
         return $statement;
     }
+
+
+    /**
+     * @param $tblName
+     * @param array $options
+     * @param string $orderBy
+     * @param string $order
+     * @return PDOStatement
+     */
+    protected function selectLike($tblName, $options = array(), $orderBy = '', $order = 'ASC')
+    {
+        if(empty($tblName))
+            die("Method " . __METHOD__ . ": parameters error.");
+
+        //Concat the options for select query
+        $whereConditions = "";
+        foreach ($options as $key => $value) {
+            $whereConditions .= $key . " LIKE :" . $key . " OR ";
+        }
+        $whereConditions = empty($whereConditions) ? '' : ' WHERE ' . rtrim($whereConditions, ' OR ');
+        $orderOption = empty($orderBy) ? '' : "ORDER BY {$orderBy} {$order}";
+
+        //Define the query
+        $sql = "SELECT * FROM {$tblName} {$whereConditions} {$orderOption}";
+
+        //Prepare the statement
+        $statement = $this->dbh->prepare($sql);
+
+        //Bind parameters
+        foreach ($options as $key => &$value) {
+            $val = "%$value%";
+            $statement->bindParam(':'.$key, $val);
+        }
+
+        //Execute the query
+        $statement->execute();
+
+        //Return the statement
+        return $statement;
+    }
+
 
     /**
      * Operate the INSERT sql in database
