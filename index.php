@@ -1,4 +1,5 @@
 <?php
+    session_start();
     error_reporting(E_ALL);
     ini_set('error_reporting', E_ALL);
 
@@ -70,8 +71,11 @@
         }
     });
 
-    $f3->route('GET /signIn', function($f3) {
-
+    $f3->route('GET|POST /signIn', function($f3) {
+//        if(isset($_SESSION['login'])) {
+//            $f3->reroute("/");
+//        }
+        include_once "model/login-validation.php";
         echo Template::instance() -> render('views/signIn.html');
     });
 

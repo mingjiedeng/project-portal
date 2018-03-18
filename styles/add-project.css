@@ -72,3 +72,59 @@ input:focus, textarea:focus{
     outline: none;
     transition: all 0.5s ease;
 }
+
+.add-rm-cred{
+    border-radius: 5px;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    padding: 8px;
+    font-weight: 200;
+    border: 0.5px solid lightgray;
+}
+.rm-cred{
+    border-radius: 0;
+}
+
+.rm-cred:hover{
+    cursor: pointer;
+}
+
+.loader{
+    border: 5px solid white;
+    border-radius: 50%;
+    border-top: 5px solid orange;
+    width: 120px;
+    height: 120px;
+    animation: spin 0.5s linear infinite;
+    margin: auto;
+    text-align: center;
+    margin-top: 250px;
+}
+@keyframes spin{
+    0%{transform:rotate(0deg);}
+    100%{transform:rotate(360deg);}
+}
+
+#overlay {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+    cursor: pointer;
+}
+
+#text{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 50px;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+}

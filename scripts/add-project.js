@@ -95,6 +95,10 @@ $(document).ready(function() {
 
     //send form data after user hit submit button
     $('form').on('submit', function (e) {
+        $("#success-msg").hide();
+        document.getElementById("overlay").style.display = "block";
+        $("#load").addClass("loader");
+
         e.preventDefault(); //prevent page reload
 
         //set submit flag
@@ -104,17 +108,32 @@ $(document).ready(function() {
 
         $.post("./addProject", data, function (result) {
             // alert(result);
-            if(result.includes("submitted"))
-                loading();
+            if(result.includes("submitted")) {
+                success();
+            }
             if(result.includes(":")) {
                 var results = jQuery.parseJSON(result); //covert result into json
                 $.each(results, function (index, item) { //loop over and get the values
                     var input_name = item.split(":");
                     $("#" + input_name[0] + "-error").html(input_name[1]); //show errors
                 });
+
+                $("#load").removeClass("loader");
+                document.getElementById("overlay").style.display = "none";
             }
         });
     });
+
+    //this function runs every time when user hit the submit button
+    function success() {
+        setTimeout(function(){
+            $("#success-msg").fadeIn(150);
+            $("#load").removeClass("loader");
+        }, 500);
+        setTimeout(function(){
+            document.getElementById("overlay").style.display = "none";
+        }, 2500);
+    }
 
     //add login credentials
     $('#add-btn').click(function () {
@@ -232,22 +251,4 @@ $(document).ready(function() {
     // $(window).on("beforeunload", function() {
     //     return "Are you sure? You didn't finish the form!";
     // });
-
-    //this function runs after when user successfully submitted the form
-    //it displays some loading spins and success msg by clicking on submit
-    function loading() {
-        //     $("#success-msg").hide();
-        //     document.getElementById("overlay").style.display = "block";
-        //     $("#load").addClass("loader");
-        //
-        //     setTimeout(function(){
-        //         $("#load").removeClass("loader");
-        //         $("#success-msg").fadeIn(150);
-        //     }, 800);
-        //
-        //     setTimeout(function(){
-        //         document.getElementById("overlay").style.display = "none";
-        //         window.location.href = 'http://gsingh.greenriverdev.com/328/project-portal/';
-        //     }, 2500);
-    };
 });
