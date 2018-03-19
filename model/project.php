@@ -44,7 +44,6 @@ class Project extends DataObject
     );
 
     protected $usersColumns = array(
-        'user_id' => '',
         'privilege' => '',
         'userName' => '',
         'password' => '',
@@ -301,6 +300,18 @@ class Project extends DataObject
     }
 
 
+
+    function getUser($user_id)
+    {
+        $tblName = 'users';
+        $options = array('user_id' => $user_id);
+
+        $statement = $this->select($tblName, $options);
+
+        return $statement->fetch(PDO::FETCH_ASSOC);
+    }
+
+
     /**
      * @param $data
      * @return bool|int
@@ -323,7 +334,7 @@ class Project extends DataObject
     function updateUser($data, $user_id)
     {
         $tblName = 'users';
-        $columns = $this->contactsColumns;
+        $columns = $this->usersColumns;
         $options = array('user_id' => $user_id);
         return $this->update($tblName, $columns, $data, $options);
     }

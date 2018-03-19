@@ -5,8 +5,8 @@
 
     //Require the autoload file
     require_once('vendor/autoload.php');
-    require_once '/home/gsinghgr/config.php';
-//    require_once '/home/mdenggre/db-config.php';
+//    require_once '/home/gsinghgr/config.php';
+    require_once '/home/mdenggre/db-config.php';
 
 
     //Create an instance of the Base class
@@ -95,13 +95,11 @@
     });
 
     $f3->route('GET|POST /addUser', function($f3) {
-        $pObject = new Project();
-        $pObject->addUser($_POST);
+        include_once 'model/addUser.php';
     });
 
-    $f3->route('GET /updateUser', function($f3) {
-        $pObject = new Project();
-        $pObject->updateUser($_POST, $_POST['user_id']);
+    $f3->route('GET|POST /updateUser', function($f3) {
+        include_once 'model/updateUser.php';
     });
 
     //Run fat free
