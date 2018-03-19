@@ -5,8 +5,8 @@
 
     //Require the autoload file
     require_once('vendor/autoload.php');
-//    require_once '/home/gsinghgr/config.php';
-    require_once '/home/mdenggre/db-config.php';
+    require_once '/home/gsinghgr/config.php';
+//    require_once '/home/mdenggre/db-config.php';
 
 
     //Create an instance of the Base class
@@ -20,14 +20,15 @@
         $f3->set('login', 'yes');
 
         $project = new Project();
-        //$projects = $project->getProjects();
-        $projects = $project->getProjectByKeyword("project b");
+//        $projects = $project->getProjects();
+        $projects = $project->getProjectByKeyword("jatt");
         $f3->set('projects', $projects);
 
         echo Template::instance() -> render('views/pList.html');
     });
 
     $f3->route('GET /project/@pid', function($f3, $params) {
+        $status = array('Pending', 'Active', 'Retired','Maintenance');
         $project = new Project();
         $projects = $project->getProject($params['pid']);
         $classes = $project->getClasses($params['pid']);
@@ -35,6 +36,7 @@
         $f3->set("project", $projects);
         $f3->set("classes", $classes);
         $f3->set("contacts", $contacts);
+        $f3->set("status", $status);
 //        $f3->set('login', '$contactsset');
 //        $f3->set('edit', 'set');
         echo Template::instance() -> render('views/pSummary.html');

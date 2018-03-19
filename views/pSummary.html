@@ -79,18 +79,18 @@
             <div class="form-group row">
                 <div class="col-md-6">
                     <span id="title-error" class="text-danger"></span>
-                    <input id="title" type="text" name="title" class="" placeholder="Project Title:">
+                    <input id="title" type="text" name="pTitle" class="" placeholder="Project Title:" value="{{ @project['pTitle'] }}">
                 </div>
 
                 <label class="col-md-2 col-form-label text-md-right">Project Status:</label>
                 <div class="col-md-4">
                     <span id="status-error" class="text-danger"></span>
                     <select id="status" style="font-weight: 100;" name="status" class="form-control">
-                        <option value="none">--Select--</option>
-                        <option value="Pending">Pending</option>
-                        <option value="Active">Active</option>
-                        <option value="Maintenance">Maintenance</option>
-                        <option value="Retired">Retired</option>
+                        <repeat group="{{@status}}" value="{{@option}}">
+                            <option value="Pending" <check if="{{@option == @project['status']}}">selected</check>>
+                                {{@option}}
+                            </option>
+                        </repeat>
                     </select>
                 </div>
             </div>
@@ -98,36 +98,37 @@
             <div class="form-group row">
                 <div class="col-md-6">
                     <span id="description-error" class="text-danger"></span>
-                    <textarea id="description" name="description" style="font-weight: 100;" rows="2" placeholder="Description:"></textarea>
+                    <textarea id="description" name="description" style="font-weight: 100;" rows="2" placeholder="Description:">{{ @project['description'] }}</textarea>
                 </div>
                 <div class="col-md-6">
                     <span id="note-error" class="text-danger"></span>
-                    <textarea id="note" name="note" style="font-weight: 100;" rows="2" placeholder="Note:"></textarea>
+                    <textarea id="note" name="note" style="font-weight: 100;" rows="2" placeholder="Note:">{{ @project['note'] }}</textarea>
                 </div>
             </div>
 
             <div class="form-group row">
                 <div class="col-md-4">
                     <span id="project-link-error" class="text-danger"></span>
-                    <input id="project-link" type="text" name="project-link" class="" placeholder="Project link:">
+                    <input id="project-link" type="text" name="url" class="" placeholder="Project link:" value="{{ @project[url] }}">
                 </div>
                 <div class="col-md-4">
                     <span id="torelo-link-error" class="text-danger"></span>
-                    <input id="torelo-link" type="text" name="torelo-link" class="" placeholder="Torelo link:">
+                    <input id="torelo-link" type="text" name="trello" class="" placeholder="Torelo link:" value="{{ @project[trello] }}">
                 </div>
                 <div class="col-md-4">
                     <span id="github-link-error" class="text-danger"></span>
-                    <input id="github-link" type="text" name="github-link" class="" placeholder="Github link:">
+                    <input id="github-link" type="text" name="github" class="" placeholder="Github link:" value="{{ @project[github] }}">
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-12 text-md-right">
-                    <button type="button" class="btn btn-outline-success update">Update</button>
+                    <button id="project" type="button" class="btn btn-outline-success update">Update</button>
                 </div>
             </div>
         </fieldset> <!--project info editable-->
     </div>
+</form>
 
     <div class="new-form read-form" id="read_class-info">
         <div class="row">
@@ -180,7 +181,7 @@
             <!--</div>-->
             <div class="row">
                 <div class="col-md-12 text-md-right">
-                    <button type="button" class="btn btn-outline-success update">Update</button>
+                    <button id="class" type="button" class="btn btn-outline-success update">Update</button>
                 </div>
             </div>
         </fieldset> <!--class info editable-->
@@ -308,7 +309,7 @@
             </div>
         </fieldset> <!--contact info end-->
     </div>
-</form>
+<!--</form>-->
 </div>
 
 
@@ -317,13 +318,8 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
 </body>
 <script src="http://code.jquery.com/jquery.js"></script>
+<!--<script src="./scripts/add-project.js"></script>-->
 <script>
-    // $("button").click(function(){
-    //    $("input").removeAttr("readonly");
-    //    $("input").focus();
-    //    $("input").css("border", "1px solid black");
-    // });
-
     //hide all edit forms at first
     $(".edit-form").hide();
     $(".edit").hide();
@@ -336,15 +332,42 @@
 
     //hide edit form and show readable form data again
     //after clicking update button
-    $(".update").click(function () {
-        $(".edit-form").hide(150);
-        $(".read-form").show(250);
-    });
+    // $(".update").click(function () {
+    //     $(".edit-form").hide(150);
+    //     $(".read-form").show(250);
+    // });
 
     //show edit on hover current block
     $(".read-form").mouseover(function () {
        $('.edit').hide();
        $(this).find(".edit").show();
     });
+
+    $(".update").click(function () {
+       var id = $(this).attr("id");
+       var pid = "{{ @project['pid'] }}";
+
+        //set submit flag
+        var set = 'submit';
+        var data = $('form').serializeArray(); //serialize form data
+        data.push({name:'pid', value:pid});
+
+        $.post("{{@BASE}}/model/updateProject.php", data, function (result) {
+
+        });
+    });
+
+    // $("body").on( "focus", "input, textarea", function() {
+    //     $(this).focusout(function(){
+    //         var value = $(this).val(); //get input value
+    //         // var input_name = $(this).attr('name'); //get input name attribute
+    //         var input_name = $(this).attr('id');
+    //
+    //         //Make Ajax call
+    //         $.post("{{@BASE}}/model/validation.php",{input:value, name:input_name}, function(result){
+    //             $("#"+input_name+"-error").html(result);
+    //         });
+    //     });
+    // });
 </script>
 </html>
