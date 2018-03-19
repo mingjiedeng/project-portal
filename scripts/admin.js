@@ -31,11 +31,13 @@ $(document).ready(function() {
     });
 
     $("#addUser").click(function () {
-        var userName = $("#addUserName");
-        var email = $("#addEmail");
-        var privilege = $("#addPrivilege");
+        var userName = $("#addUserName").val();
+        var email = $("#addEmail").val();
+        var privilege = $("#addPrivilege").val();
 
-        $.post("/addUser",{userName:userName, email:email, privilege:privilege}, function(result){ alert(result)});
+        $.post("./addUser",{userName:userName, email:email, privilege:privilege}, function(result){
+            alert(result)
+        });
 
         // $.ajax({
         //     type:'post',

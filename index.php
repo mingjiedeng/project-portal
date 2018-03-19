@@ -94,7 +94,7 @@
         echo Template::instance() -> render('views/admin.html');
     });
 
-    $f3->route('GET /addUser', function($f3) {
+    $f3->route('GET|POST /addUser', function($f3) {
         $pObject = new Project();
         $pObject->addUser($_POST);
     });
