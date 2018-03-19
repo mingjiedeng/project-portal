@@ -305,10 +305,11 @@ class Project extends DataObject
      * @param $data
      * @return bool|int
      */
-    protected function addUser($data)
+    function addUser($data)
     {
         $tblName = 'users';
         $columns = $this->usersColumns;
+        $columns['password'] = hash("sha256", "greenriverdev");
 
         return $this->insert($tblName, $columns, $data);
     }

@@ -94,5 +94,15 @@
         echo Template::instance() -> render('views/admin.html');
     });
 
+    $f3->route('GET /addUser', function($f3) {
+        $pObject = new Project();
+        $pObject->addUser($_POST);
+    });
+
+    $f3->route('GET /updateUser', function($f3) {
+        $pObject = new Project();
+        $pObject->updateUser($_POST, $_POST['user_id']);
+    });
+
     //Run fat free
     $f3->run();

@@ -25,7 +25,7 @@
         <tr>
             <th><input class="form-control"  type="text" id="addUserName" value="" placeholder="UserName"></th>
             <td><input class="form-control"  type="text" id="addEmail" value="" placeholder="Email Address"></th>
-            <td><select class="form-control">
+            <td><select id="addPrivilege" class="form-control">
                 <option value="2">General User</option>
                 <option value="1">Administrator</option>
             </select>
@@ -106,37 +106,5 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
 </body>
 <script src="http://code.jquery.com/jquery.js"></script>
-
-<script>
-    //enable edit field by clicking on edit button
-    $(".edit-input").hide();
-    $(".edit").click(function(){
-        var id = $(this).val();
-
-        //show the edit field of current row and hide all the reading info
-        //of current row
-        if($(this).html() == 'Edit') {
-            $("#readName-"+id).hide();
-            $("#editName-"+id).show();
-
-            $("#readMail-"+id).hide();
-            $("#editMail-"+id).show();
-
-            $("#readPrivilege-"+id).hide();
-            $("#editPrivilege-"+id).show();
-
-            $(this).html('Update')
-        } else { //switch back to reading mode after clicking update btn
-            $(this).html('Edit')
-            $("#readName-"+id).show();
-            $("#editName-"+id).hide();
-
-            $("#readMail-"+id).show();
-            $("#editMail-"+id).hide();
-
-            $("#readPrivilege-"+id).show();
-            $("#editPrivilege-"+id).hide();
-        }
-    });
-</script>
+<script src="{{@BASE}}/scripts/admin.js"></script>
 </html>
