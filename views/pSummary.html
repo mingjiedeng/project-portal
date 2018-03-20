@@ -10,9 +10,6 @@
     <link rel="stylesheet" href="{{@BASE}}/styles/summary-styles.css">
 
     <title>Project Summary</title>
-    <style>
-
-    </style>
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-toggleable" style="background-color: #1C2833;">
@@ -27,24 +24,28 @@
     </div>
 </nav><!-- nav bar -->
 
+<div id="overlay">
+    <div style="margin-top: 250px; font-weight: 200;" id="updated" class="h2 text-center text-white"></div>
+</div>
+
 <div class="container">
-<form action="" method="post">
+<form id="updateProject" action="" method="post">
     <div class="new-form read-form" id="read_project-info">
         <div class="row">
             <div class="col-6">
                 <legend>Project Information</legend>
             </div>
             <div class="col-6 text-right">
-                <button id="project-info" type="button" class="btn btn-sm btn-outline-info edit" name="edit">Edit</button>
+                <button id="project-info" type="button" class="btn btn-sm btn-outline-info rounded-0 edit" name="edit">Edit</button>
             </div>
         </div>
         <hr style="margin-top: 2px;">
         <div class="row form-group">
             <div class="col-md-3">
-                <p><span class="text-muted">Project Title:</span>{{ @project['pTitle'] }}</p>
+                <p><span class="text-muted">Project Title:</span> {{ @project['pTitle'] }}</p>
             </div>
             <div class="col-md-3">
-                <p><span class="text-muted">Project Status:</span>{{ @project['status'] }}</p>
+                <p><span class="text-muted">Project Status:</span> {{ @project['status'] }}</p>
             </div>
         </div>
         <div class="row form-group">
@@ -71,9 +72,10 @@
     <div id="edit_project-info" class="new-form edit-form">
         <fieldset>
             <div class="row">
-                <div class="col-6">
+                <div class="col-md-5">
                     <legend>Project Information</legend>
                 </div>
+                <div id="updateProject-error" class="col-md-7 text-danger"></div>
             </div>
             <hr style="margin-top: 2px;">
             <div class="form-group row">
@@ -87,7 +89,7 @@
                     <span id="status-error" class="text-danger"></span>
                     <select id="status" style="font-weight: 100;" name="status" class="form-control">
                         <repeat group="{{@status}}" value="{{@option}}">
-                            <option value="Pending" <check if="{{@option == @project['status']}}">selected</check>>
+                            <option <check if="{{@option == @project['status']}}">selected</check>>
                                 {{@option}}
                             </option>
                         </repeat>
@@ -123,7 +125,8 @@
 
             <div class="row">
                 <div class="col-md-12 text-md-right">
-                    <button id="project" type="button" class="btn btn-outline-success update">Update</button>
+                    <button type="button" class="btn btn-outline-danger rounded-0 cancel-update">Cancel</button>
+                    <button id="updateProject_btn" type="button" class="btn btn-outline-success rounded-0 update">Update</button>
                 </div>
             </div>
         </fieldset> <!--project info editable-->
@@ -136,7 +139,7 @@
                 <legend>Class Information</legend>
             </div>
             <div class="col-6 text-right">
-                <button id="class-info" type="button" class="btn btn-sm btn-outline-info edit" name="edit">Edit</button>
+                <button id="class-info" type="button" class="btn btn-sm btn-outline-info rounded-0 edit" name="edit">Edit</button>
             </div>
         </div>
         <hr style="margin-top: 2px;">
@@ -155,45 +158,54 @@
         </repeat>
     </div> <!--class info read only-->
 
+<form id="updateClass" action="" method="post">
     <div id="edit_class-info" class="new-form edit-form">
         <fieldset>
-            <legend>Class Information</legend>
-            <hr style="margin-top: 2px;">
-            <div class="form-group row">
-                <div class="col-md-4">
-                    <span id="classname_1-error" class="text-danger"></span>
-                    <input id="classname_1" type="text" name="classname[]" placeholder="Class name:">
+            <div class="row">
+                <div class="col-md-5">
+                    <legend>Class Information</legend>
                 </div>
-                <div class="col-md-4">
-                    <span id="quarter_1-error" class="text-danger"></span>
-                    <input id="quarter_1" type="text" name="quarter[]" placeholder="Quarter:">
-                </div>
-                <div class="col-md-4">
-                    <span id="year_1-error" class="text-danger"></span>
-                    <input id="year_1" type="text" name="year[]" placeholder="Year:">
+                <div class="col-md-7">
+                    <div id="updateClass-error" class="col-md-7 text-danger"></div>
                 </div>
             </div>
-            <!--<div class="row">-->
-                <!--<div class="col-md-6">-->
-                    <!--<button type="button" class="btn btn-sm btn-outline-success rounded-0" id="add-class">Add Class</button>-->
-                    <!--<button type="button" class="btn btn-sm btn-outline-danger rounded-0" id="remove-class">Remove Class</button>-->
-                <!--</div>-->
-            <!--</div>-->
+            <hr style="margin-top: 2px;">
+            <repeat group="{{ @classes }}" value="{{ @class }}">
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        <span id="classname_1-error" class="text-danger"></span>
+                        <input id="classname_1" type="text" name="className[]" placeholder="Class name:" value="{{ @class['className'] }}">
+                    </div>
+                    <div class="col-md-4">
+                        <span id="quarter_1-error" class="text-danger"></span>
+                        <input id="quarter_1" type="text" name="quarter[]" placeholder="Quarter: example Spring 2018" value="{{ @class['quarter'] }}">
+                    </div>
+                    <div class="col-md-4">
+                        <span id="instructor_1-error" class="text-danger"></span>
+                        <input id="instructor_1" type="text" name="instructor[]" placeholder="Instructor:" value="{{ @class['instructor'] }}">
+                    </div>
+                </div>
+                <hr style="margin-top: 2px;">
+            </repeat>
+
             <div class="row">
                 <div class="col-md-12 text-md-right">
-                    <button id="class" type="button" class="btn btn-outline-success update">Update</button>
+                    <button type="button" class="btn btn-outline-danger rounded-0 cancel-update">Cancel</button>
+                    <button id="updateClass_btn" type="button" class="btn btn-outline-success rounded-0 update">Update</button>
                 </div>
             </div>
         </fieldset> <!--class info editable-->
     </div>
+</form>
 
+<form id="updateCompany" action="" method="post">
     <div class="new-form read-form" id="read_company-info">
         <div class="row">
             <div class="col-6">
                 <legend>Company Information</legend>
             </div>
             <div class="col-6 text-right">
-                <button id="company-info" type="button" class="btn btn-sm btn-outline-info edit" name="edit">Edit</button>
+                <button id="company-info" type="button" class="btn btn-sm btn-outline-info rounded-0 edit" name="edit">Edit</button>
             </div>
         </div>
         <hr style="margin-top: 2px;">
@@ -212,33 +224,42 @@
 
     <div id="edit_company-info" class="new-form edit-form">
         <fieldset>
-            <legend>Company Information</legend>
+            <div class="row">
+                <div class="col-md-5">
+                    <legend>Company Information</legend>
+                </div>
+                <div class="col-md-7">
+                    <div id="updateCompany-error" class="col-md-7 text-danger"></div>
+                </div>
+            </div>
             <hr style="margin-top: 2px;">
             <div class="form-group row">
                 <div class="col-md-6">
                     <span id="company-error" class="text-danger"></span>
-                    <input id="company" type="text" name="company" placeholder="Company name:">
+                    <input id="company" type="text" name="cName" placeholder="Company name:" value="{{ @project['cName'] }}">
                 </div>
 
                 <div class="col-md-6">
                     <span id="location-error" class="text-danger"></span>
-                    <input id="location" type="text" name="location" placeholder="Location:">
+                    <input id="location" type="text" name="cLocation" placeholder="Location:" value="{{ @project['cLocation'] }}">
                 </div>
             </div>
 
             <div class="form-group row">
                 <div class="col-md-6">
                     <span id="site-url-error" class="text-danger"></span>
-                    <input id="site-url" type="text" name="site-url" placeholder="Site url:">
+                    <input id="site-url" type="text" name="cSite" placeholder="Site url:" value="{{ @project[cSite] }}">
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12 text-md-right">
-                    <button type="button" class="btn btn-outline-success update">Update</button>
+                    <button type="button" class="btn btn-outline-danger rounded-0 cancel-update">Cancel</button>
+                    <button id="updateCompany_btn" type="button" class="btn btn-outline-success rounded-0 update">Update</button>
                 </div>
             </div>
         </fieldset> <!--company info editable-->
     </div>
+</form>
 
     <div class="new-form read-form" id="read_contact-info">
         <div class="row">
@@ -246,7 +267,7 @@
                 <legend>Contact Information</legend>
             </div>
             <div class="col-6 text-right">
-                <button id="contact-info" type="button" class="btn btn-sm btn-outline-info edit" name="edit">Edit</button>
+                <button id="contact-info" type="button" class="btn btn-sm btn-outline-info rounded-0 edit" name="edit">Edit</button>
             </div>
         </div>
         <hr style="margin-top: 2px;">
@@ -268,48 +289,55 @@
         </repeat>
     </div> <!--contact info read only-->
 
+<form id="updateContact" action="" method="post">
     <div id="edit_contact-info" class="new-form edit-form">
         <fieldset>
-            <legend>Contact Information</legend>
+            <div class="row">
+                <div class="col-md-5">
+                    <legend>Contact Information</legend>
+                </div>
+                <div class="col-md-7">
+                    <div id="updateContact-error" class="col-md-7 text-danger"></div>
+                </div>
+            </div>
             <hr style="margin-top: 2px;">
-            <div class="form-group row">
-                <div class="col-md-6">
-                    <span id="client-name-error" class="text-danger"></span>
-                    <input id="client-name" type="text" name="client-name" placeholder="Name:">
+            <repeat group="{{ @contacts }}" value="{{ @contact }}">
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <span id="clientname_1-error" class="text-danger"></span>
+                        <input id="clientname_1" type="text" name="contactName[]" placeholder="Name:" value="{{ @contact['contactName'] }}">
+                    </div>
+
+                    <div class="col-md-6">
+                        <span id="clienttitle_1-error" class="text-danger"></span>
+                        <input id="clienttitle_1" type="text" name="title[]" placeholder="Title:" value="{{ @contact['title'] }}">
+                    </div>
                 </div>
 
-                <div class="col-md-6">
-                    <span id="client-title-error" class="text-danger"></span>
-                    <input id="client-title" type="text" name="client-title" placeholder="Title:">
-                </div>
-            </div>
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <span id="phone_1-error" class="text-danger"></span>
+                        <input id="phone_1" type="text" name="phone[]" placeholder="Phone:" value="{{ @contact['phone'] }}">
+                    </div>
 
-            <div class="form-group row">
-                <div class="col-md-6">
-                    <span id="phone-error" class="text-danger"></span>
-                    <input id="phone" type="text" name="client-phone" placeholder="Phone:">
+                    <div class="col-md-6">
+                        <span id="email_1-error" class="text-danger"></span>
+                        <input id="email_1" type="text" name="email[]" placeholder="Email:" value="{{ @contact['email'] }}">
+                    </div>
                 </div>
-
-                <div class="col-md-6">
-                    <span id="email-error" class="text-danger"></span>
-                    <input id="email" type="text" name="client-email" placeholder="Email:">
-                </div>
-            </div>
-
-            <!--<div class="row">-->
-                <!--<div class="col-md-2">-->
-                    <!--<a href="" class="link" id="add-conct" data-toggle="modal" data-target="#myModal">Add contact</a>-->
-                <!--</div>-->
-            <!--</div>-->
+                <hr style="margin-top: 2px;">
+            </repeat>
 
             <div class="row">
                 <div class="col-md-12 text-md-right">
-                    <button type="button" class="btn btn-outline-success update">Update</button>
+                    <button type="button" class="btn btn-outline-danger rounded-0 cancel-update">Cancel</button>
+                    <button id="updateContact_btn" type="button" class="btn btn-outline-success rounded-0 update">Update</button>
                 </div>
             </div>
         </fieldset> <!--contact info end-->
     </div>
-<!--</form>-->
+</form>
+    <div style="margin-top: 30px;"></div>
 </div>
 
 
@@ -318,56 +346,40 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
 </body>
 <script src="http://code.jquery.com/jquery.js"></script>
-<!--<script src="./scripts/add-project.js"></script>-->
+<script src="{{@BASE}}/scripts/update-project.js"></script>
 <script>
-    //hide all edit forms at first
-    $(".edit-form").hide();
-    $(".edit").hide();
-    //show edit form after clicking on edit button
-    $(".edit").click(function () {
-       var block = $(this).attr('id');
-       $("#edit_"+block).show(250);
-       $("#read_"+block).hide(150);
-    });
 
-    //hide edit form and show readable form data again
-    //after clicking update button
-    // $(".update").click(function () {
-    //     $(".edit-form").hide(150);
-    //     $(".read-form").show(250);
-    // });
-
-    //show edit on hover current block
-    $(".read-form").mouseover(function () {
-       $('.edit').hide();
-       $(this).find(".edit").show();
-    });
-
+    /*DO NOT MOVE THE FOLLOWING TWO FUNCTIONS TO SEPARATE FILE.
+    * THIS FUNCTION SENDS THE REQUESTS BASED ON PROJECT ID. WE DO NOT HAVE
+    * ACCESS ON PROJECT ID IN SEPARATE JS FILE.*/
+    //update fields
     $(".update").click(function () {
        var id = $(this).attr("id");
-       var pid = "{{ @project['pid'] }}";
+       var form = id.split("_");
 
         //set submit flag
-        var set = 'submit';
-        var data = $('form').serializeArray(); //serialize form data
-        data.push({name:'pid', value:pid});
+        var data = $("#" + form[0]).serializeArray(); //serialize form data
+        data.push({name:'form', value:form[0]});
 
-        $.post("{{@BASE}}/model/updateProject.php", data, function (result) {
-
+        //send post request
+        $.post("{{@BASE}}/project/{{ @project['pid'] }}", data, function (result) {
+            // alert(result);
+            if(result == 'error') {
+                $("#"+form[0]+"-error").html("Missing field(s)");
+            } else {
+                document.getElementById("overlay").style.display = "block";
+                $("#updated").html("Project has been updated");
+                $("#"+form[0]+"-error").html("");
+                updated(); //updated effect after submission
+            }
         });
     });
-
-    // $("body").on( "focus", "input, textarea", function() {
-    //     $(this).focusout(function(){
-    //         var value = $(this).val(); //get input value
-    //         // var input_name = $(this).attr('name'); //get input name attribute
-    //         var input_name = $(this).attr('id');
-    //
-    //         //Make Ajax call
-    //         $.post("{{@BASE}}/model/validation.php",{input:value, name:input_name}, function(result){
-    //             $("#"+input_name+"-error").html(result);
-    //         });
-    //     });
-    // });
+    //refresh page after updating
+    function updated() {
+        setTimeout(function(){
+            document.getElementById("overlay").style.display = "none";
+            window.location.href = "{{@BASE}}/project/{{ @project['pid'] }}";
+        }, 1800);
+    }
 </script>
 </html>

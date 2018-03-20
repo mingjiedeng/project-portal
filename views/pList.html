@@ -41,34 +41,37 @@
 </nav><!-- nav bar -->
 
 <div style="padding: 20px;" class="container">
-    <repeat group="{{ @projects }}" value="{{ @project }}">
-        <div class="list">
-            <div class="row">
-                <div class="col">
-                    <p class="h3">{{ @project[pTitle] }}</p>
-                    <hr>
-                    <p>
-                        {{ @project[description] }}
-                    </p>
+    <div id="orig-list">
+        <repeat group="{{ @projects }}" value="{{ @project }}">
+            <div class="list">
+                <div class="row">
+                    <div class="col">
+                        <p class="h3">{{ @project[pTitle] }}</p>
+                        <hr>
+                        <p>
+                            {{ @project[description] }}
+                        </p>
 
-                    <div class="row">
-                        <div class="col-6">
-                            <a href="<check if="{{ @project[github] }}">//{{ @project[github] }}</check>" target="_blank">Github,</a>
-                            <a href="<check if="{{ @project[trello] }}">//{{ @project[trello] }}</check>" target="_blank">Torello,</a>
-                            <a href="<check if="{{ @project[url] }}">//{{ @project[url] }}</check>" target="_blank">Project Url</a>
-                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <a href="<check if="{{ @project[github] }}">//{{ @project[github] }}</check>" target="_blank">Github,</a>
+                                <a href="<check if="{{ @project[trello] }}">//{{ @project[trello] }}</check>" target="_blank">Trello,</a>
+                                <a href="<check if="{{ @project[url] }}">//{{ @project[url] }}</check>" target="_blank">Project Url</a>
+                            </div>
 
-                        <div class="col-6 text-right">
-                            <!-- change this line to add the link on the button --Mingjie
-                            <button class="btn btn-outline-primary rounded-0">View</button>-->
-                            <a class="btn btn-outline-primary rounded-0" href="project/{{ @project['pid'] }}" role="button">View</a>
-                            <!--<a class="float-right" href="">View</a>-->
+                            <div class="col-6 text-right">
+                                <a class="btn btn-outline-primary rounded-0" href="project/{{ @project['pid'] }}" role="button">View</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </repeat>
+        </repeat>
+    </div>
+
+    <div id="list"></div>
+    <div id="loader"></div>
+    <div style="font-weight: 200;" id="no-result" class="text-center text-white h3"></div>
 </div>
 
 
@@ -78,12 +81,4 @@
 </body>
 <script src="http://code.jquery.com/jquery.js"></script>
 <script src="./scripts/project-list.js"></script>
-<script>
-    // $("#search-icon").click(function(){
-    //     if($("#search").is(":visible"))
-    //     {
-    //
-    //     }
-    // });
-</script>
 </html>

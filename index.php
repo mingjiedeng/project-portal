@@ -20,14 +20,20 @@
         $f3->set('login', 'yes');
 
         $project = new Project();
-//        $projects = $project->getProjects();
-        $projects = $project->getProjectByKeyword("jatt");
-        $f3->set('projects', $projects);
 
-        echo Template::instance() -> render('views/pList.html');
+        if(isset($_GET['keyword'])) {
+            $searched = $project->getProjectByKeyword($_GET['keyword']);
+            echo json_encode($searched);
+        }
+        else if(!isset($_GET['keyword'])) {
+            $projects = $project->getProjects();
+            $f3->set('projects', $projects);
+
+            echo Template::instance() -> render('views/pList.html');
+        }
     });
 
-    $f3->route('GET /project/@pid', function($f3, $params) {
+    $f3->route('GET|POST /project/@pid', function($f3, $params) {
         $status = array('Pending', 'Active', 'Retired','Maintenance');
         $project = new Project();
         $projects = $project->getProject($params['pid']);
@@ -37,9 +43,56 @@
         $f3->set("classes", $classes);
         $f3->set("contacts", $contacts);
         $f3->set("status", $status);
-//        $f3->set('login', '$contactsset');
-//        $f3->set('edit', 'set');
-        echo Template::instance() -> render('views/pSummary.html');
+
+        $post = $_POST;
+        include_once "model/updateProject.php";
+
+        if(isset($_POST['form'])) {
+            $project = new Project();
+
+            if($valid) {
+                if ($_POST['form'] == 'updateProject' || $_POST['form'] == 'updateCompany') {
+                    unset($_POST['form']);
+                    $project->updateProject($_POST, $params['pid']);
+                } else if ($_POST['form'] == 'updateClass') {
+                    unset($_POST['form']);
+                    $classNames = $_POST['className'];
+                    $quarter = $_POST['quarter'];
+                    $instructor = $_POST['instructor'];
+                    unset($_POST);
+                    $index = 0;
+                    foreach ($classes as $class) {
+                        $_POST['className'] = $classNames[$index];
+                        $_POST['quarter'] = $quarter[$index];
+                        $_POST['instructor'] = $instructor[$index];
+
+                        $project->updateClass($_POST, $class['cid']);
+                        $index++;
+                    }
+                } else if ($_POST['form'] == 'updateContact') {
+                    unset($_POST['form']);
+                    $contactNames = $_POST['contactName'];
+                    $title = $_POST['title'];
+                    $phone = $_POST['phone'];
+                    $email = $_POST['email'];
+
+                    unset($_POST);
+                    $index = 0;
+                    foreach ($contacts as $contact) {
+                        $_POST['contactName'] = $contactNames[$index];
+                        $_POST['title'] = $title[$index];
+                        $_POST['phone'] = $phone[$index];
+                        $_POST['email'] = $email[$index];
+
+                        $project->updateContacts($_POST, $contact['contact_id']);
+                        $index++;
+                    }
+                }
+                echo "updated";
+            }
+        }
+        else if(!isset($_POST['pid']))
+            echo Template::instance() -> render('views/pSummary.html');
     });
 
     $f3->route('GET|POST /addProject', function($f3) {
