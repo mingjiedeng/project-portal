@@ -132,6 +132,8 @@ $(document).ready(function() {
         }, 500);
         setTimeout(function(){
             document.getElementById("overlay").style.display = "none";
+            $("input", "textarea").val('');
+            window.location.href = "http://gsingh.greenriverdev.com/328/project-portal/";
         }, 2500);
     }
 
@@ -246,9 +248,4 @@ $(document).ready(function() {
         if(contact_id == 0)
             $("#remove-contact").fadeOut("slow");
     });
-
-    //show warning before user leave the form
-    // $(window).on("beforeunload", function() {
-    //     return "Are you sure? You didn't finish the form!";
-    // });
 });

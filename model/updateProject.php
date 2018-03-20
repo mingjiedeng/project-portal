@@ -1,4 +1,16 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Gursimran
+ * Date: 2018/3/6
+ * Time: 17:54
+ */
+
+    /**
+     * This php file used for updating the data in summary page.
+     * It checks and respond back if there is any empty field
+     * left before updating any project info.
+     */
 
     $valid = true;
     //make sure its the project and company fields is not empty

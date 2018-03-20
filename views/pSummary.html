@@ -19,7 +19,7 @@
 
     <div id="myContent">
         <div class="navbar-nav ml-auto">
-            <a class="nav-item nav-link active thin" href="" style="letter-spacing: 1px;">Sign out</a>
+            <check if="{{isset(@login)}}"><a class="nav-item nav-link active thin" href="{{@BASE}}?signout=yes" style="letter-spacing: 1px;">Sign out</a></check>
         </div>
     </div>
 </nav><!-- nav bar -->
@@ -36,7 +36,7 @@
                 <legend>Project Information</legend>
             </div>
             <div class="col-6 text-right">
-                <button id="project-info" type="button" class="btn btn-sm btn-outline-info rounded-0 edit" name="edit">Edit</button>
+                <check if="{{isset(@login)}}"><button id="project-info" type="button" class="btn btn-sm btn-outline-info rounded-0 edit" name="edit">Edit</button></check>
             </div>
         </div>
         <hr style="margin-top: 2px;">
@@ -67,6 +67,15 @@
                 <p class="text-success"><span class="text-muted">Github Link:</span> <a href="<check if="{{ @project[github] }}">//{{ @project[github] }}</check>" target="_blank">{{ @project['github'] }}</a></p>
             </div>
         </div>
+
+        <check if="{{isset(@login) && !empty(@project[username])}}">
+            <div class="row">
+                <div class="col-12 text-right">
+                    <span class="text-muted">User Name:</span> {{@project[username]}}
+                    <span class="text-muted">Password:</span> {{@project[password]}}
+                </div>
+            </div>
+        </check>
     </div> <!--project info read only-->
 
     <div id="edit_project-info" class="new-form edit-form">
@@ -139,7 +148,7 @@
                 <legend>Class Information</legend>
             </div>
             <div class="col-6 text-right">
-                <button id="class-info" type="button" class="btn btn-sm btn-outline-info rounded-0 edit" name="edit">Edit</button>
+                <check if="{{isset(@login)}}"><button id="class-info" type="button" class="btn btn-sm btn-outline-info rounded-0 edit" name="edit">Edit</button></check>
             </div>
         </div>
         <hr style="margin-top: 2px;">
@@ -205,7 +214,7 @@
                 <legend>Company Information</legend>
             </div>
             <div class="col-6 text-right">
-                <button id="company-info" type="button" class="btn btn-sm btn-outline-info rounded-0 edit" name="edit">Edit</button>
+                <check if="{{isset(@login)}}"><button id="company-info" type="button" class="btn btn-sm btn-outline-info rounded-0 edit" name="edit">Edit</button></check>
             </div>
         </div>
         <hr style="margin-top: 2px;">
@@ -261,6 +270,7 @@
     </div>
 </form>
 
+<check if="{{isset(@login)}}">
     <div class="new-form read-form" id="read_contact-info">
         <div class="row">
             <div class="col-6">
@@ -288,6 +298,7 @@
         </div>
         </repeat>
     </div> <!--contact info read only-->
+</check>
 
 <form id="updateContact" action="" method="post">
     <div id="edit_contact-info" class="new-form edit-form">

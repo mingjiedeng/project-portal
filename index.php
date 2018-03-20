@@ -5,8 +5,8 @@
 
     //Require the autoload file
     require_once('vendor/autoload.php');
-//    require_once '/home/gsinghgr/config.php';
-    require_once '/home/mdenggre/db-config.php';
+    require_once '/home/gsinghgr/config.php';
+//    require_once '/home/mdenggre/db-config.php';
 
 
     //Create an instance of the Base class
@@ -17,15 +17,20 @@
 
     //Define a default route
     $f3->route('GET /', function($f3) {
-        $f3->set('login', 'yes');
+        if(isset($_GET['signout'])) {
+            unset($_SESSION['login']); //unset session if signed out
+        }
 
-        $project = new Project();
+        $f3->set('login', $_SESSION['login']); //get login session
 
+        $project = new Project(); //instance of project class
+
+        //get results from database if user searching
         if(isset($_GET['keyword'])) {
             $searched = $project->getProjectByKeyword($_GET['keyword']);
             echo json_encode($searched);
         }
-        else if(!isset($_GET['keyword'])) {
+        else if(!isset($_GET['keyword'])) { //show all the projects
             $projects = $project->getProjects();
             $f3->set('projects', $projects);
 
@@ -33,7 +38,12 @@
         }
     });
 
+    //view project details route
     $f3->route('GET|POST /project/@pid', function($f3, $params) {
+
+        $f3->set('login', $_SESSION['login']); //get login session
+
+        //get all the the info from database
         $status = array('Pending', 'Active', 'Retired','Maintenance');
         $project = new Project();
         $projects = $project->getProject($params['pid']);
@@ -47,13 +57,15 @@
         $post = $_POST;
         include_once "model/updateProject.php";
 
+        //check if form is submitted
         if(isset($_POST['form'])) {
             $project = new Project();
 
+            //if its valid update the project data into the database
             if($valid) {
                 if ($_POST['form'] == 'updateProject' || $_POST['form'] == 'updateCompany') {
                     unset($_POST['form']);
-                    $project->updateProject($_POST, $params['pid']);
+                    $project->updateProject($_POST, $params['pid']); //update project info
                 } else if ($_POST['form'] == 'updateClass') {
                     unset($_POST['form']);
                     $classNames = $_POST['className'];
@@ -69,7 +81,7 @@
                         $project->updateClass($_POST, $class['cid']);
                         $index++;
                     }
-                } else if ($_POST['form'] == 'updateContact') {
+                } else if ($_POST['form'] == 'updateContact') { //update contact info
                     unset($_POST['form']);
                     $contactNames = $_POST['contactName'];
                     $title = $_POST['title'];
@@ -95,18 +107,14 @@
             echo Template::instance() -> render('views/pSummary.html');
     });
 
+    //add new project route
     $f3->route('GET|POST /addProject', function($f3) {
-//        $years = array();
-//        $currentYear = date("Y");
-//        $year = 2015;
-//        while($year <= $currentYear) {
-//            array_push($years, $year);
-//            $year++;
-//        }
-//        $f3->set("years",$years);
+        if(!isset($_SESSION['login']))
+            $f3->reroute("/signIn"); //redirect to signIn route if user not signed in
 
         if(isset($_POST['submit']))
         {
+            //get all data into variable
             $post = $_POST; //variable used in validation.php
             include_once "model/validate-onsubmit.php";
             include_once "model/validate-hiddenfields.php";
@@ -127,18 +135,20 @@
         }
     });
 
+    //sign in page route
     $f3->route('GET|POST /signIn', function($f3) {
-//        if(isset($_SESSION['login'])) {
-//            $f3->reroute("/");
-//        }
+        if(isset($_SESSION['login'])) {
+            $f3->reroute("/"); //redirect to main page if signed in
+        }
         include_once "model/login-validation.php";
         echo Template::instance() -> render('views/signIn.html');
     });
 
+    //admin page route
     $f3->route('GET /admin', function($f3) {
-//        if (!isset($_SESSION['userName']) || $_SESSION['privilege'] != 1) {
-//            $f3->reroute('/');
-//        }
+        if (!isset($_SESSION['userName']) || $_SESSION['privilege'] != 1) {
+            $f3->reroute('/');
+        }
 
         $pObject = new Project();
         $users = $pObject->getUsers();
@@ -147,10 +157,12 @@
         echo Template::instance() -> render('views/admin.html');
     });
 
+    //add user route
     $f3->route('GET|POST /addUser', function($f3) {
         include_once 'model/addUser.php';
     });
 
+    //update user route
     $f3->route('GET|POST /updateUser', function($f3) {
         include_once 'model/updateUser.php';
     });

@@ -60,6 +60,11 @@ body{
     padding: 4px;
 }
 
+.thin:hover{
+    color: white;
+    opacity: 0.5;
+}
+
 .list{
     background-color: #EAECEE;
     padding: 15px;

@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
     //hide search bar
     $("#search").hide();
     $(".list").hide();

@@ -31,10 +31,15 @@
     <div class="" id="myContent">
         <div class="navbar-nav ml-auto">
             <check if="{{isset(@login)}}">
-                <a class="nav-item nav-link active thin" href="{{@BASE}}/addProject"><img id="add-icon" src="{{@BASE}}/images/add.svg"> <span>Add new project</span></a>
+                <true>
+                    <a class="nav-item nav-link active thin" href="{{@BASE}}/addProject"><img id="add-icon" src="{{@BASE}}/images/add.svg"> <span>Add new project</span></a>
+                    <a style="border: 0;" class="nav-item nav-link active thin" href="{{@BASE}}?signout=yes"> <span>Sign Out</span></a>
+
+                </true>
+                <false><a style="margin-left: 60px;" class="nav-item nav-link active thin" href="{{@BASE}}/signIn"><span>Sign In</span></a></false>
             </check>
             <check if="{{!isset(@login)}}">
-                <a class="nav-item nav-link active thin" href="{{@BASE}}/signIn"><span>Sign In</span></a>
+                <!--<a class="nav-item nav-link active thin" href="{{@BASE}}/signIn"><span>Sign In</span></a>-->
             </check>
         </div>
     </div>
@@ -69,8 +74,8 @@
         </repeat>
     </div>
 
-    <div id="list"></div>
-    <div id="loader"></div>
+    <div id="list"></div> <!--load list into this div when user search-->
+    <div id="loader"></div> <!--add loading spinner-->
     <div style="font-weight: 200;" id="no-result" class="text-center text-white h3"></div>
 </div>
 

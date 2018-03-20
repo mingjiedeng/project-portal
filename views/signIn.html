@@ -7,10 +7,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
     <link rel="stylesheet" href="./styles/login.css">
     <title>Sign In</title>
-
-    <style>
-
-    </style>
 </head>
 <body>
     <div class="container">
@@ -23,6 +19,8 @@
             </div>
             <h2 id="login-head">Sign In</h2>
             <img id="login-img" src="./images/account.svg" alt="login">
+
+            <div id="failed" class="text-danger text-center"></div>
 
             <form action="#" method="post">
                 <div style="margin-bottom: 40px;" class="form-group row">
@@ -54,53 +52,5 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
 </body>
 <script src="http://code.jquery.com/jquery.js"></script>
-<script>
-    $(document).ready(function() {
-       //show fields after page load
-       $("#login-box").hide();
-       $("#login-box").fadeIn(600);
-
-        //validate email while user typing
-       $("#email, #password").keyup(function(){
-            //get email or password
-            var login = $(this).val();
-            var id = $(this).attr("id");
-
-            //send login info
-           sendData(login, id, "false");
-       });
-
-       //validate sign in form on submit button
-       $("#sign-in").click(function(){
-           //get email
-           var login = $("#email").val();
-           var id = $("#email").attr("id");
-
-           //send email and password
-           for(i = 0; i < 2; i++) {
-               sendData(login, id, "true");
-
-               //get password after sending email
-               login = $("#password").val();
-               id = $("#password").attr("id");
-           }
-       });
-
-       //this method validate login info while user typing
-       function sendData(login, id, submit)
-       {
-           //send login to the file
-           $.post("model/login-validation.php",{login:login, input_id:id, submit:submit}, function(result){
-               console.log(result);
-               if(result == "false") {
-                   $("#"+id).css("border", "1px solid red");
-               } else if(result == "true"){
-                   $("#"+id).css("border", "1px solid green");
-               } else {
-                   window.location.href = "http://gsingh.greenriverdev.com/328/project-portal/";
-               }
-           });
-       }
-    });
-</script>
+<script src="./scripts/sign-in.js"></script>
 </html>
